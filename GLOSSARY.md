@@ -19,3 +19,17 @@ _Avoid_: Dark mode, dark theme, night mode, Direction 1
 **AI-Augmented Engineering**:
 An architecture-first engineering practice where human-owned system design, specifications, and verification direct agentic execution tools.
 _Avoid_: AI-assisted, AI-native, vibe coding
+
+### Proof of Work
+
+**Experience**:
+The top-level career section covering Amr's professional engineering history, pairing flagship **Case Studies** with compact timeline entries for earlier roles.
+_Avoid_: Work history, resume section, client projects
+
+**Case Study**:
+A deep, NDA-safe architectural breakdown of a flagship production system inside **Experience**, focusing on constraints, architectural trade-offs, execution craft, and verified outcomes.
+_Avoid_: Project summary, portfolio piece, feature list
+
+**Personal Project**:
+A publicly inspectable GitHub repository authored by Amr, presented with a concise summary, tech stack, and repository link.
+_Avoid_: Side project, showcase project, lab, mini-demo
