@@ -33,3 +33,9 @@ _Avoid_: Project summary, portfolio piece, feature list
 **Personal Project**:
 A publicly inspectable GitHub repository authored by Amr, presented with a concise summary, tech stack, and repository link.
 _Avoid_: Side project, showcase project, lab, mini-demo
+
+### Site Structure
+
+**Colophon**:
+A short footer block stating how the portfolio itself was built, serving as transparent proof of Amr's React and TypeScript craft.
+_Avoid_: Credits, about this site, tech stack page
