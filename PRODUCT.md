@@ -34,14 +34,16 @@ Systems-first frontend architecture proven on high-stakes production systems: th
 - Two authored visual modes: **Daylight** is the first-visit default, and **Obsidian** is the user-switched, persisted dark mode. Warm Copper is the only brand accent (`docs/adr/0001-daylight-default-and-unified-copper-identity.md`).
 - English only in v1. No blog, CMS, backend, user accounts, or heavy 3D/WebGL scenes.
 - NDA boundary "Architecture-Public / Internals-Redacted": no real product UI screenshots, no proprietary schemas or endpoints, no internal names, no named government clients, and no confidential numbers (`docs/adr/0003-experience-case-studies-nda-boundary-and-github-projects.md`).
-- The site must stay a static deployment with a strict CSP. Live third-party API calls at runtime are not allowed.
-- Undecided: typography and the spacing scale, the CV PDF itself, and the signature interactive touches (issue #7).
+- The site must stay a static deployment with a strict CSP. Live third-party API calls or font fetches at runtime are not allowed.
+- Self-hosted variable `WOFF2` typography (`Instrument Sans` + `JetBrains Mono`) on a `4px` spacing scale, `1120px` max container (`65ch` Case Study measure), and `768px` mobile nav breakpoint (`docs/adr/0007-self-hosted-typography-and-spatial-scale.md`).
+- Signature interactive touch: **Architecture Lenses** (`Data flow` default, `Structure`, `Resilience`, `Performance`) over NDA-safe Case Study schematics (`docs/adr/0006-interactive-architecture-lenses-signature-touch.md`).
+- Deferred out of the v1 app build: producing `/cv.pdf` (Hero and Contact reserve a gated Download CV slot that activates once `public/cv.pdf` is present).
 
 ## Brand Commitments
 
 - No logo or monogram. The full name **Amr Sadat Abou Hegab** is the centered typographic centerpiece.
 - The voice is calm, first-person, and evidence-led.
-- Canonical vocabulary lives in `GLOSSARY.md`: Daylight, Obsidian, AI-Augmented Engineering, Experience, Case Study, Personal Project, Colophon.
+- Canonical vocabulary lives in `GLOSSARY.md`: Daylight, Obsidian, AI-Augmented Engineering, Experience, Case Study, Context Strip, Architecture Lens, Personal Project, Colophon.
 - Public contact is limited to Email, LinkedIn, GitHub, and `Egypt · UTC+2`. Never publish phone/WhatsApp, address, DOB, or military status.
 
 ## Evidence on Hand

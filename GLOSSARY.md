@@ -30,6 +30,14 @@ _Avoid_: Work history, resume section, client projects
 A deep, NDA-safe architectural breakdown of a flagship production system inside **Experience**, focusing on constraints, architectural trade-offs, execution craft, and verified outcomes.
 _Avoid_: Project summary, portfolio piece, feature list
 
+**Context Strip**:
+The structured summary row opening a **Case Study** that states role, tenure, scale signals, and core stack at a glance.
+_Avoid_: Hero metadata, stats bar, summary card, project header
+
+**Architecture Lens**:
+A selectable analytical view over a **Case Study**'s schematic diagram (such as Data flow, Structure, Resilience, or Performance) that isolates relevant system surfaces, callouts, and trade-off notes.
+_Avoid_: Diagram tab, filter mode, walkthrough step, node inspector
+
 **Personal Project**:
 A publicly inspectable GitHub repository authored by Amr, presented with a concise summary, tech stack, and repository link.
 _Avoid_: Side project, showcase project, lab, mini-demo

@@ -6,7 +6,7 @@ status: accepted
 
 The portfolio's signature interactive touch is an **interactive NDA-safe architecture diagram** embedded in each flagship **Case Study** using the **Lenses** pattern (Variant C from the issue #7 prototype), with **Data flow** selected by default on load.
 
-Each diagram renders a token-driven **Daylight**/**Obsidian** schematic SVG paired with a compact segmented lens bar (**Structure**, **Data flow**, **Resilience**, **Performance** — or equivalent domain-appropriate lenses per Case Study). Switching a lens highlights the relevant system surfaces and edges, drops numbered copper callout badges onto those surfaces, displays the matching numbered architectural notes directly below the stage, and—on **Data flow**—animates subtle sequential copper packets along the active edges.
+Each diagram renders a token-driven **Daylight**/**Obsidian** schematic SVG paired with a compact segmented **Architecture Lens** bar standardized across both Case Studies (**Data flow** [default], **Structure**, **Resilience**, **Performance**). Switching a lens highlights the relevant system surfaces and edges, drops numbered copper callout badges onto those surfaces, displays the matching numbered architectural notes directly below the stage, and—on **Data flow**—animates subtle sequential copper packets along the active edges.
 
 All motion stays **CSS-first plus lightweight native SVG/WAAPI** with no third-party motion library, and respects `prefers-reduced-motion` (disabling packet animation and callout pop-in while keeping highlights and notes instant).
 
