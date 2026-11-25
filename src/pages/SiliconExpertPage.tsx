@@ -2,7 +2,7 @@ import { Link } from 'react-router';
 
 export function SiliconExpertPage() {
   return (
-    <main>
+    <main id="main-content">
       <nav aria-label="Breadcrumb">
         <Link to="/#experience">← Experience</Link>
       </nav>
