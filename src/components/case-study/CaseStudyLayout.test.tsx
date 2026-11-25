@@ -57,5 +57,9 @@ describe('CaseStudyLayout', () => {
     const diagramSlot = main.querySelector('[data-diagram-slot="siliconexpert"]');
     expect(diagramSlot).not.toBeNull();
     expect(diagramSlot).toHaveTextContent(/p5 platform frontend architecture schematic/i);
+    expect(
+      within(diagramSlot as HTMLElement).getByRole('button', { name: 'Data flow' }),
+    ).toHaveAttribute('aria-pressed', 'true');
+    expect(diagramSlot!.querySelector('svg')).not.toBeNull();
   });
 });

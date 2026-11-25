@@ -5,7 +5,7 @@ export type CaseStudySectionId = 'context' | 'problem' | 'architecture' | 'craft
 
 export type CaseStudySectionNumber = '01' | '02' | '03' | '04' | '05';
 
-export type ArchitectureLensId = 'Data flow' | 'Structure' | 'Resilience' | 'Performance';
+export type ArchitectureLensId = 'data-flow' | 'structure' | 'resilience' | 'performance';
 
 export const CASE_STUDY_SECTION_ORDER: readonly CaseStudySectionId[] = [
   'context',
@@ -16,11 +16,83 @@ export const CASE_STUDY_SECTION_ORDER: readonly CaseStudySectionId[] = [
 ] as const;
 
 export const ARCHITECTURE_LENSES: readonly ArchitectureLensId[] = [
-  'Data flow',
-  'Structure',
-  'Resilience',
-  'Performance',
+  'data-flow',
+  'structure',
+  'resilience',
+  'performance',
 ] as const;
+
+export const ARCHITECTURE_LENS_LABELS: Readonly<Record<ArchitectureLensId, string>> = {
+  'data-flow': 'Data flow',
+  structure: 'Structure',
+  resilience: 'Resilience',
+  performance: 'Performance',
+};
+
+export interface SchematicZone {
+  readonly id: string;
+  readonly label: string;
+  readonly x: number;
+  readonly y: number;
+  readonly width: number;
+  readonly height: number;
+}
+
+export interface SchematicNode {
+  readonly id: string;
+  readonly label: string;
+  readonly sublabel: string;
+  readonly x: number;
+  readonly y: number;
+  readonly width: number;
+  readonly height: number;
+  readonly kind?: 'surface' | 'foundation';
+}
+
+export interface SchematicEdge {
+  readonly id: string;
+  readonly from: string;
+  readonly to: string;
+  readonly path: string;
+  readonly label?: string;
+  readonly labelX?: number;
+  readonly labelY?: number;
+}
+
+export interface SchematicCallout {
+  readonly number: number;
+  readonly nodeId: string;
+  readonly title: string;
+  readonly detail: string;
+  readonly badgeOffset?: {
+    readonly dx: number;
+    readonly dy: number;
+  };
+}
+
+export interface ArchitectureLensView {
+  readonly id: ArchitectureLensId;
+  readonly label: string;
+  readonly summary: string;
+  readonly activeNodes: readonly string[];
+  readonly activeEdges: readonly string[];
+  readonly packetEdges?: readonly string[];
+  readonly callouts: readonly SchematicCallout[];
+}
+
+export interface ArchitectureSchematic {
+  readonly id: FlagshipId;
+  readonly title: string;
+  readonly caption: string;
+  readonly viewBox: {
+    readonly width: number;
+    readonly height: number;
+  };
+  readonly zones: readonly SchematicZone[];
+  readonly nodes: readonly SchematicNode[];
+  readonly edges: readonly SchematicEdge[];
+  readonly lenses: Readonly<Record<ArchitectureLensId, ArchitectureLensView>>;
+}
 
 export interface ContextStripData {
   readonly role: CvBackedValue<string>;
@@ -107,6 +179,7 @@ export interface CaseStudy {
   readonly ndaNotice: string;
   readonly contextStrip: ContextStripData;
   readonly diagram: DiagramSlotConfig;
+  readonly schematic: ArchitectureSchematic;
   readonly sections: CaseStudySections;
   readonly sibling: SiblingCaseStudyRef;
 }

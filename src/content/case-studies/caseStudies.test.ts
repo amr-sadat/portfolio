@@ -58,16 +58,53 @@ describe('case study content contract', () => {
     expect(idemiaCaseStudy.sibling.href).toBe('/experience/siliconexpert');
   });
 
-  it('keeps unverified CV facts marked and includes typed diagram slots for #14', () => {
+  it('keeps unverified CV facts marked and includes typed ArchitectureSchematic data for both case studies', () => {
     expect(siliconExpertCaseStudy.contextStrip.role).toBe('Senior Front End Developer II');
     expect(siliconExpertCaseStudy.contextStrip.tenure).toBe(UNVERIFIED_CV_MARKER);
 
     expect(idemiaCaseStudy.contextStrip.role).toBe(UNVERIFIED_CV_MARKER);
     expect(idemiaCaseStudy.contextStrip.tenure).toBe(UNVERIFIED_CV_MARKER);
 
+    const expectedLensIds = ['data-flow', 'structure', 'resilience', 'performance'] as const;
+
     for (const study of allStudies) {
       expect(study.diagram.id).toBe(study.id);
-      expect(study.diagram.lenses).toEqual(['Data flow', 'Structure', 'Resilience', 'Performance']);
+      expect(study.diagram.lenses).toEqual(expectedLensIds);
+
+      const { schematic } = study;
+      expect(schematic.id).toBe(study.id);
+      expect(schematic.nodes.length).toBeGreaterThanOrEqual(5);
+      expect(schematic.nodes.length).toBeLessThanOrEqual(7);
+      expect(schematic.edges.length).toBeGreaterThanOrEqual(4);
+      expect(schematic.zones.length).toBeGreaterThanOrEqual(1);
+
+      const nodeIds = new Set(schematic.nodes.map((node) => node.id));
+      const edgeIds = new Set(schematic.edges.map((edge) => edge.id));
+
+      for (const edge of schematic.edges) {
+        expect(nodeIds.has(edge.from)).toBe(true);
+        expect(nodeIds.has(edge.to)).toBe(true);
+      }
+
+      for (const lensId of expectedLensIds) {
+        const lens = schematic.lenses[lensId];
+        expect(lens.id).toBe(lensId);
+        expect(lens.callouts.length).toBeGreaterThanOrEqual(3);
+        expect(lens.callouts.length).toBeLessThanOrEqual(4);
+
+        for (const activeNodeId of lens.activeNodes) {
+          expect(nodeIds.has(activeNodeId)).toBe(true);
+        }
+        for (const activeEdgeId of lens.activeEdges) {
+          expect(edgeIds.has(activeEdgeId)).toBe(true);
+        }
+        for (const [index, callout] of lens.callouts.entries()) {
+          expect(callout.number).toBe(index + 1);
+          expect(nodeIds.has(callout.nodeId)).toBe(true);
+        }
+      }
+
+      expect(schematic.lenses['data-flow'].packetEdges?.length).toBeGreaterThan(0);
     }
   });
 

@@ -1,13 +1,18 @@
 export {
+  ARCHITECTURE_LENS_LABELS,
   ARCHITECTURE_LENSES,
   CASE_STUDY_SECTION_ORDER,
   caseStudies,
   getCaseStudyTocItems,
   idemiaCaseStudy,
+  idemiaSchematic,
   siliconExpertCaseStudy,
+  siliconExpertSchematic,
 } from './case-studies';
 export type {
   ArchitectureLensId,
+  ArchitectureLensView,
+  ArchitectureSchematic,
   ArchitectureSectionData,
   CaseStudy,
   CaseStudySectionId,
@@ -20,6 +25,10 @@ export type {
   DiagramSlotConfig,
   OutcomesSectionData,
   ProblemSectionData,
+  SchematicCallout,
+  SchematicEdge,
+  SchematicNode,
+  SchematicZone,
   SiblingCaseStudyRef,
   TradeoffBreakdown,
 } from './case-studies';

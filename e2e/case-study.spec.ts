@@ -65,6 +65,31 @@ for (const study of CASE_STUDIES) {
     expect(tocBox!.y).toBeGreaterThanOrEqual(60);
     expect(tocBox!.y).toBeLessThan(200);
 
+    // Interactive Architecture Lenses: Data flow default + lens switching
+    const lensGroup = page.getByRole('group', { name: /architecture lenses/i });
+    const dataFlowBtn = lensGroup.getByRole('button', { name: 'Data flow' });
+    await expect(dataFlowBtn).toHaveAttribute('aria-pressed', 'true');
+    await expect(page.locator('[data-packet-layer]')).toHaveAttribute(
+      'data-packets-active',
+      'true',
+    );
+    expect(await page.locator('[data-callout-badge]').count()).toBeGreaterThanOrEqual(3);
+
+    for (const lensName of ['Structure', 'Resilience', 'Performance'] as const) {
+      const btn = lensGroup.getByRole('button', { name: lensName });
+      await btn.click();
+      await expect(btn).toHaveAttribute('aria-pressed', 'true');
+      await expect(dataFlowBtn).toHaveAttribute('aria-pressed', 'false');
+      await expect(page.locator('[data-packet-layer]')).toHaveAttribute(
+        'data-packets-active',
+        'false',
+      );
+      expect(await page.locator('[data-callout-badge]').count()).toBeGreaterThanOrEqual(3);
+    }
+
+    await dataFlowBtn.click();
+    await expect(dataFlowBtn).toHaveAttribute('aria-pressed', 'true');
+
     // Sibling Case Study cross-link points to the other flagship
     const siblingLink = page.getByRole('link', { name: study.siblingName });
     await expect(siblingLink).toHaveAttribute('href', study.siblingPath);
@@ -120,6 +145,24 @@ for (const study of CASE_STUDIES) {
     expect(archSectionBox).not.toBeNull();
     expect(archSectionBox!.y).toBeGreaterThanOrEqual(64);
 
+    // Confirm Architecture Lens controls meet 44px mobile tap target and keep zero page overflow
+    const mobileLensGroup = page.getByRole('group', { name: /architecture lenses/i });
+    for (const lensName of ['Data flow', 'Structure', 'Resilience', 'Performance'] as const) {
+      const btn = mobileLensGroup.getByRole('button', { name: lensName });
+      const box = await btn.boundingBox();
+      expect(box).not.toBeNull();
+      expect(box!.height).toBeGreaterThanOrEqual(44);
+    }
+    await mobileLensGroup.getByRole('button', { name: 'Resilience' }).click();
+    await expect(mobileLensGroup.getByRole('button', { name: 'Resilience' })).toHaveAttribute(
+      'aria-pressed',
+      'true',
+    );
+    const hasOverflowAfterLens = await page.evaluate(
+      () => document.documentElement.scrollWidth > window.innerWidth,
+    );
+    expect(hasOverflowAfterLens).toBe(false);
+
     const daylightAxe = await new AxeBuilder({ page }).analyze();
     expect(daylightAxe.violations).toEqual([]);
 
@@ -127,5 +170,30 @@ for (const study of CASE_STUDIES) {
     await expect(page.locator('html')).toHaveAttribute('data-theme', 'obsidian');
     const obsidianAxe = await new AxeBuilder({ page }).analyze();
     expect(obsidianAxe.violations).toEqual([]);
+  });
+
+  test(`prefers-reduced-motion disables packet animation while preserving callouts on ${study.path}`, async ({
+    page,
+  }) => {
+    await page.emulateMedia({ reducedMotion: 'reduce' });
+    await page.setViewportSize({ width: 1280, height: 800 });
+    await page.goto(study.path);
+
+    const lensGroup = page.getByRole('group', { name: /architecture lenses/i });
+    await expect(lensGroup.getByRole('button', { name: 'Data flow' })).toHaveAttribute(
+      'aria-pressed',
+      'true',
+    );
+    await expect(page.locator('[data-packet-layer]')).toHaveAttribute(
+      'data-packets-active',
+      'false',
+    );
+    expect(await page.locator('[data-packet]').count()).toBe(0);
+    expect(await page.locator('[data-callout-badge]').count()).toBeGreaterThanOrEqual(3);
+    const calloutAnimationName = await page
+      .locator('[data-callout-badge]')
+      .first()
+      .evaluate((el) => window.getComputedStyle(el).animationName);
+    expect(calloutAnimationName).toBe('none');
   });
 }

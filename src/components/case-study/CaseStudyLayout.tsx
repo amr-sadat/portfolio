@@ -6,6 +6,7 @@ import {
   type DiagramSlotConfig,
   type Profile,
 } from '../../content';
+import { ArchitectureLenses } from './ArchitectureLenses';
 import { CaseStudyFooter } from './CaseStudyFooter';
 import { CaseStudyToc } from './CaseStudyToc';
 import { ContextStrip } from './ContextStrip';
@@ -109,24 +110,7 @@ export function CaseStudyLayout({ caseStudy, profile, renderDiagram }: CaseStudy
                 {renderDiagram ? (
                   renderDiagram(caseStudy.diagram)
                 ) : (
-                  <>
-                    <div className={styles.diagramPlaceholder}>
-                      <div className={styles.diagramHeader}>
-                        <span className={styles.diagramBadge}>Architecture Lens Stage</span>
-                        <p className={styles.diagramTitle}>{caseStudy.diagram.title}</p>
-                      </div>
-                      <ul className={styles.lensList} aria-label="Planned Architecture Lenses">
-                        {caseStudy.diagram.lenses.map((lens) => (
-                          <li key={lens} className={styles.lensPill}>
-                            {lens}
-                          </li>
-                        ))}
-                      </ul>
-                    </div>
-                    <figcaption className={styles.diagramCaption}>
-                      {caseStudy.diagram.caption}
-                    </figcaption>
-                  </>
+                  <ArchitectureLenses schematic={caseStudy.schematic} />
                 )}
               </figure>
 

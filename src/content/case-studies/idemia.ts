@@ -1,4 +1,5 @@
 import { UNVERIFIED_CV_MARKER } from '../profile';
+import { idemiaSchematic } from './schematics';
 import { ARCHITECTURE_LENSES, type CaseStudy } from './types';
 
 export const idemiaCaseStudy: CaseStudy = {
@@ -22,11 +23,11 @@ export const idemiaCaseStudy: CaseStudy = {
   },
   diagram: {
     id: 'idemia',
-    title: 'Border Control & e-Visa Frontend Architecture Schematic',
-    caption:
-      'Interactive Architecture Lens schematic covering Data flow, Structure, Resilience, and Performance across mission-critical multi-module workflows.',
+    title: idemiaSchematic.title,
+    caption: idemiaSchematic.caption,
     lenses: ARCHITECTURE_LENSES,
   },
+  schematic: idemiaSchematic,
   sections: {
     context: {
       id: 'context',

@@ -1,0 +1,346 @@
+.root {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-5);
+}
+
+.header {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-4);
+}
+
+.titleGroup {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+}
+
+.eyebrow {
+  align-self: flex-start;
+  font-family: var(--font-mono);
+  font-size: var(--text-mono-sm);
+  line-height: 1.4;
+  padding: var(--space-1) var(--space-3);
+  border-radius: var(--radius-badge);
+  background-color: var(--color-accent-tint-bg);
+  color: var(--color-accent-tint-ink);
+  font-weight: 600;
+}
+
+.title {
+  font-size: var(--text-h3);
+  line-height: 1.3;
+  font-weight: 600;
+  color: var(--color-ink-primary);
+}
+
+.lensBar {
+  display: inline-flex;
+  flex-wrap: wrap;
+  align-self: flex-start;
+  gap: var(--space-1);
+  padding: var(--space-1);
+  border-radius: calc(var(--radius-cta) + 2px);
+  background-color: var(--color-surface-elevated);
+  border: 1px solid var(--color-border-subtle);
+  box-shadow: var(--shadow-stage);
+}
+
+.lensButton {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 44px;
+  padding: 0 var(--space-4);
+  border: 0;
+  border-radius: var(--radius-cta);
+  background-color: transparent;
+  color: var(--color-ink-muted);
+  font-family: var(--font-sans);
+  font-size: var(--text-mono);
+  font-weight: 500;
+  line-height: 1;
+  cursor: pointer;
+}
+
+.lensButton:hover {
+  color: var(--color-ink-primary);
+  background-color: var(--color-secondary-bg);
+}
+
+.lensButton[aria-pressed='true'] {
+  background-color: var(--color-accent-fill);
+  color: var(--color-accent-on-fill);
+  font-weight: 600;
+}
+
+.svgViewport {
+  width: 100%;
+  max-width: 100%;
+  overflow-x: auto;
+  border-radius: var(--radius-card);
+  border: 1px solid var(--color-border-subtle);
+  background-color: var(--color-surface-elevated);
+  padding: var(--space-3);
+}
+
+.svg {
+  display: block;
+  width: 100%;
+  min-width: 620px;
+  height: auto;
+  overflow: visible;
+}
+
+.zoneRect {
+  fill: var(--color-secondary-bg);
+  stroke: var(--color-border-subtle);
+  stroke-width: 1;
+  stroke-dasharray: 4 4;
+}
+
+.zoneLabel {
+  font-family: var(--font-mono);
+  font-size: 10px;
+  font-weight: 600;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  fill: var(--color-ink-muted);
+}
+
+.arrowMuted {
+  fill: var(--color-border-strong);
+}
+
+.arrowActive {
+  fill: var(--color-accent-fill);
+}
+
+.edgePath {
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  transition:
+    stroke var(--duration-base) var(--ease-standard),
+    opacity var(--duration-base) var(--ease-standard),
+    stroke-width var(--duration-base) var(--ease-standard);
+}
+
+.edgeActive .edgePath {
+  stroke: var(--color-accent-fill);
+  stroke-width: 2;
+  opacity: 1;
+}
+
+.edgeDimmed .edgePath {
+  stroke: var(--color-border-strong);
+  stroke-width: 1.5;
+  opacity: 0.38;
+}
+
+.edgeLabel {
+  font-family: var(--font-mono);
+  font-size: 10px;
+  font-weight: 500;
+  transition:
+    fill var(--duration-base) var(--ease-standard),
+    opacity var(--duration-base) var(--ease-standard);
+}
+
+.edgeActive .edgeLabel {
+  fill: var(--color-accent-text);
+  opacity: 1;
+}
+
+.edgeDimmed .edgeLabel {
+  fill: var(--color-ink-muted);
+  opacity: 0.45;
+}
+
+.node {
+  transition: opacity var(--duration-base) var(--ease-standard);
+}
+
+.nodeActive {
+  opacity: 1;
+}
+
+.nodeDimmed {
+  opacity: 0.38;
+}
+
+.nodeRect {
+  fill: var(--color-surface-elevated);
+  stroke: var(--color-border-strong);
+  stroke-width: 1.25;
+  transition:
+    stroke var(--duration-base) var(--ease-standard),
+    fill var(--duration-base) var(--ease-standard),
+    stroke-width var(--duration-base) var(--ease-standard);
+}
+
+.nodeFoundation .nodeRect {
+  fill: var(--color-secondary-bg);
+}
+
+.nodeActive .nodeRect {
+  stroke: var(--color-accent-fill);
+  stroke-width: 1.75;
+  fill: var(--color-accent-tint-bg);
+}
+
+.nodeTitle {
+  font-family: var(--font-sans);
+  font-size: 13px;
+  font-weight: 600;
+  fill: var(--color-ink-primary);
+}
+
+.nodeSublabel {
+  font-family: var(--font-mono);
+  font-size: 10.5px;
+  font-weight: 500;
+  fill: var(--color-ink-muted);
+}
+
+.nodeActive .nodeSublabel {
+  fill: var(--color-accent-tint-ink);
+}
+
+.packet {
+  fill: var(--color-accent-fill);
+  stroke: var(--color-accent-on-fill);
+  stroke-width: 1.25;
+}
+
+@keyframes calloutPop {
+  from {
+    opacity: 0;
+    transform: scale(0.55);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+.calloutBadge {
+  transform-box: fill-box;
+  transform-origin: center;
+  animation: calloutPop 260ms var(--ease-standard) backwards;
+}
+
+.calloutCircle {
+  fill: var(--color-accent-fill);
+  stroke: var(--color-surface-elevated);
+  stroke-width: 2;
+}
+
+.calloutNumber {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  font-weight: 700;
+  font-variant-numeric: tabular-nums;
+  fill: var(--color-accent-on-fill);
+}
+
+.notesPanel {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-4);
+}
+
+.lensSummary {
+  font-size: var(--text-ui);
+  line-height: var(--leading-ui);
+  color: var(--color-ink-primary);
+  font-weight: 500;
+}
+
+.notesList {
+  list-style: none;
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: var(--space-4) var(--space-6);
+  margin: 0;
+  padding: 0;
+}
+
+.noteItem {
+  display: grid;
+  grid-template-columns: 24px minmax(0, 1fr);
+  gap: var(--space-3);
+  align-items: start;
+}
+
+.noteBadge {
+  width: 24px;
+  height: 24px;
+  border-radius: 999px;
+  display: grid;
+  place-items: center;
+  background-color: var(--color-accent-fill);
+  color: var(--color-accent-on-fill);
+  font-family: var(--font-mono);
+  font-size: 11px;
+  font-weight: 700;
+  font-variant-numeric: tabular-nums;
+  margin-top: 2px;
+}
+
+.noteBody {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-1);
+}
+
+.noteTitle {
+  font-size: var(--text-mono);
+  line-height: 1.4;
+  font-weight: 600;
+  color: var(--color-ink-primary);
+}
+
+.noteDetail {
+  font-size: var(--text-mono);
+  line-height: 1.55;
+  color: var(--color-ink-muted);
+}
+
+.caption {
+  font-size: var(--text-mono-sm);
+  line-height: 1.55;
+  color: var(--color-ink-muted);
+  border-top: 1px solid var(--color-border-subtle);
+  padding-top: var(--space-3);
+}
+
+@media (max-width: 640px) {
+  .lensBar {
+    width: 100%;
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .lensButton {
+    width: 100%;
+    padding: 0 var(--space-3);
+  }
+
+  .notesList {
+    grid-template-columns: minmax(0, 1fr);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .edgePath,
+  .edgeLabel,
+  .node,
+  .nodeRect {
+    transition: none;
+  }
+
+  .calloutBadge {
+    animation: none;
+  }
+}

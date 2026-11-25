@@ -1,4 +1,5 @@
 import { UNVERIFIED_CV_MARKER } from '../profile';
+import { siliconExpertSchematic } from './schematics';
 import { ARCHITECTURE_LENSES, type CaseStudy } from './types';
 
 export const siliconExpertCaseStudy: CaseStudy = {
@@ -22,11 +23,11 @@ export const siliconExpertCaseStudy: CaseStudy = {
   },
   diagram: {
     id: 'siliconexpert',
-    title: 'P5 Platform Frontend Architecture Schematic',
-    caption:
-      'Interactive Architecture Lens schematic covering Data flow, Structure, Resilience, and Performance across high-density enterprise workflows.',
+    title: siliconExpertSchematic.title,
+    caption: siliconExpertSchematic.caption,
     lenses: ARCHITECTURE_LENSES,
   },
+  schematic: siliconExpertSchematic,
   sections: {
     context: {
       id: 'context',

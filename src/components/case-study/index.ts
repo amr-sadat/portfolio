@@ -1,3 +1,5 @@
+export { ArchitectureLenses } from './ArchitectureLenses';
+export type { ArchitectureLensesProps } from './ArchitectureLenses';
 export { CaseStudyFooter } from './CaseStudyFooter';
 export type { CaseStudyFooterProps } from './CaseStudyFooter';
 export { CaseStudyLayout } from './CaseStudyLayout';
