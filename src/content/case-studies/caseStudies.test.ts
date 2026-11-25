@@ -1,5 +1,4 @@
 import { describe, expect, it } from 'vitest';
-import { UNVERIFIED_CV_MARKER } from '../profile';
 import {
   CASE_STUDY_SECTION_ORDER,
   caseStudies,
@@ -58,12 +57,12 @@ describe('case study content contract', () => {
     expect(idemiaCaseStudy.sibling.href).toBe('/experience/siliconexpert');
   });
 
-  it('keeps unverified CV facts marked and includes typed ArchitectureSchematic data for both case studies', () => {
+  it('includes CV-verified roles/tenures and typed ArchitectureSchematic data for both case studies', () => {
     expect(siliconExpertCaseStudy.contextStrip.role).toBe('Senior Front End Developer II');
-    expect(siliconExpertCaseStudy.contextStrip.tenure).toBe(UNVERIFIED_CV_MARKER);
+    expect(siliconExpertCaseStudy.contextStrip.tenure).toBe('Jun 2022 – Present');
 
-    expect(idemiaCaseStudy.contextStrip.role).toBe(UNVERIFIED_CV_MARKER);
-    expect(idemiaCaseStudy.contextStrip.tenure).toBe(UNVERIFIED_CV_MARKER);
+    expect(idemiaCaseStudy.contextStrip.role).toBe('Senior Software Engineer');
+    expect(idemiaCaseStudy.contextStrip.tenure).toBe('Jul 2018 – May 2022');
 
     const expectedLensIds = ['data-flow', 'structure', 'resilience', 'performance'] as const;
 

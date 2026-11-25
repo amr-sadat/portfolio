@@ -28,7 +28,7 @@ describe('CaseStudyLayout', () => {
 
     const contextStrip = within(main).getByRole('region', { name: /context strip/i });
     expect(within(contextStrip).getByText('Senior Front End Developer II')).toBeInTheDocument();
-    expect(within(contextStrip).getByText('[Verify from CV at copy pass]')).toBeInTheDocument();
+    expect(within(contextStrip).getByText('Jun 2022 – Present')).toBeInTheDocument();
     expect(within(contextStrip).getByText(/global electronics supply-chain/i)).toBeInTheDocument();
     expect(within(contextStrip).getByText('NgRx Signal Store')).toBeInTheDocument();
 

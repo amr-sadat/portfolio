@@ -1,4 +1,3 @@
-import { UNVERIFIED_CV_MARKER } from '../profile';
 import { idemiaSchematic } from './schematics';
 import { ARCHITECTURE_LENSES, type CaseStudy } from './types';
 
@@ -12,8 +11,8 @@ export const idemiaCaseStudy: CaseStudy = {
   ndaNotice:
     'Architecture-Public / Internals-Redacted: specific government clients, deployments, biometric/security internals, proprietary schemas, and confidential volumes are intentionally omitted.',
   contextStrip: {
-    role: UNVERIFIED_CV_MARKER,
-    tenure: UNVERIFIED_CV_MARKER,
+    role: 'Senior Software Engineer',
+    tenure: 'Jul 2018 – May 2022',
     scaleSignals: [
       'National-scale border control & immigration workflows',
       'Dual operator & citizen web interfaces',
@@ -34,7 +33,7 @@ export const idemiaCaseStudy: CaseStudy = {
       number: '01',
       title: 'Context & System Scope',
       paragraphs: [
-        'At IDEMIA Egypt, I worked on national-scale border control, e-Visa, and immigration web systems serving two distinct audiences with very different stakes: frontline operators processing time-sensitive workflows under strict operational rules, and citizens completing structured multi-step applications.',
+        'At IDEMIA Egypt—progressing from Junior Front End Developer (Jul 2018 – Apr 2021) to Senior Software Engineer (May 2021 – May 2022)—I built Angular front-end modules and integrated REST APIs with Java EE backend services for national-scale border control, e-Visa, and immigration web systems serving frontline operators and citizens alike.',
         'In this environment, frontend architecture is not cosmetic polish—it is an operational safety layer. Every screen, validation rule, and state transition directly shapes whether an operator can make an unambiguous decision quickly and whether an application reaches backend services in a valid, auditable state.',
       ],
     },
@@ -96,9 +95,9 @@ export const idemiaCaseStudy: CaseStudy = {
       ],
       practices: [
         'Strict TypeScript domain models and discriminated state unions to make invalid UI states unrepresentable.',
-        'Centralized multi-step validation rules with clear, actionable inline and summary feedback.',
+        'Centralized multi-step validation rules and Java EE REST API integrations with clear, actionable inline and summary feedback.',
         'Keyboard-first navigation, semantic landmarks, and resilient error recovery paths for frontline operators.',
-        'Disciplined code reviews focused on failure modes, auditability, and security boundaries.',
+        'Jasmine unit testing and disciplined code reviews focused on failure modes, auditability, and security boundaries.',
       ],
     },
     outcomes: {
@@ -109,7 +108,7 @@ export const idemiaCaseStudy: CaseStudy = {
         'Consistent, maintainable multi-module architecture across national-scale border control, e-Visa, and immigration workflows.',
         'Predictable, deterministic multi-step validation and resilient error handling that reduced ambiguity in high-stakes operator and citizen flows.',
         'Durable accessibility and runtime discipline aligned with strict security and audit requirements.',
-        `Verified tenure, role title, and directional scale metrics: ${UNVERIFIED_CV_MARKER}.`,
+        'Progressed from Junior Front End Developer (Jul 2018 – Apr 2021) to Senior Software Engineer (May 2021 – May 2022), delivering Angular front-end modules, Java EE REST API integrations, and Jasmine unit tests.',
       ],
       retrospective:
         'Working on national-scale public systems permanently shaped how I think about frontend engineering: clarity under failure matters more than clever abstractions. Treating every asynchronous workflow as an explicit state machine with visible recovery paths is a habit I have carried into every enterprise platform since.',

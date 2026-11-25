@@ -39,7 +39,7 @@ const BASE_PROFILE: Omit<Profile, 'hasCvPdf'> = {
     email: 'amrsadat2017@gmail.com',
     linkedin: {
       label: 'LinkedIn',
-      href: UNVERIFIED_CV_MARKER,
+      href: 'https://www.linkedin.com/in/amrsadat/',
     },
     github: {
       label: 'GitHub',

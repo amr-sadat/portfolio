@@ -67,7 +67,7 @@ describe('SEO route metadata', () => {
 });
 
 describe('Person JSON-LD privacy boundary', () => {
-  it('emits only approved public fields and filters unverified placeholder URLs', () => {
+  it('emits only approved public fields including verified GitHub and LinkedIn URLs', () => {
     const jsonLd = buildPersonJsonLd(profile, TEST_SITE_URL);
 
     expect(jsonLd).toEqual({
@@ -76,7 +76,7 @@ describe('Person JSON-LD privacy boundary', () => {
       name: 'Amr Sadat Abou Hegab',
       jobTitle: 'Senior Frontend Engineer',
       url: 'https://amrsadat.dev/',
-      sameAs: ['https://github.com/amr-sadat'],
+      sameAs: ['https://github.com/amr-sadat', 'https://www.linkedin.com/in/amrsadat/'],
       address: {
         '@type': 'PostalAddress',
         addressCountry: 'EG',
@@ -88,24 +88,21 @@ describe('Person JSON-LD privacy boundary', () => {
     expect(serialized).not.toMatch(/telephone|streetAddress|birthDate|amrsadat2017/i);
   });
 
-  it('includes LinkedIn in sameAs once a verified https URL is configured', () => {
+  it('filters unverified placeholder URLs from sameAs', () => {
     const base = createProfile();
-    const withLinkedIn = {
+    const withPlaceholder = {
       ...base,
       contact: {
         ...base.contact,
         linkedin: {
           label: 'LinkedIn',
-          href: 'https://www.linkedin.com/in/amr-sadat',
+          href: UNVERIFIED_CV_MARKER,
         },
       },
     };
 
-    const jsonLd = buildPersonJsonLd(withLinkedIn, TEST_SITE_URL);
-    expect(jsonLd.sameAs).toEqual([
-      'https://github.com/amr-sadat',
-      'https://www.linkedin.com/in/amr-sadat',
-    ]);
+    const jsonLd = buildPersonJsonLd(withPlaceholder, TEST_SITE_URL);
+    expect(jsonLd.sameAs).toEqual(['https://github.com/amr-sadat']);
   });
 });
 

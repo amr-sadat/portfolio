@@ -25,8 +25,11 @@ describe('ContactSection', () => {
     expect(githubLink).toHaveAttribute('rel', 'noopener noreferrer');
 
     expect(screen.getByText('Egypt · UTC+2')).toBeInTheDocument();
-    expect(screen.getByText(/LinkedIn/i)).toBeInTheDocument();
-    expect(screen.getByText(UNVERIFIED_CV_MARKER)).toBeInTheDocument();
+
+    const linkedinLink = screen.getByRole('link', { name: /LinkedIn/i });
+    expect(linkedinLink).toHaveAttribute('href', 'https://www.linkedin.com/in/amrsadat/');
+    expect(linkedinLink).toHaveAttribute('target', '_blank');
+    expect(linkedinLink).toHaveAttribute('rel', 'noopener noreferrer');
 
     expect(screen.queryByRole('link', { name: 'Download CV' })).not.toBeInTheDocument();
   });
@@ -68,26 +71,25 @@ describe('ContactSection', () => {
     });
   });
 
-  it('renders Download CV when hasCvPdf is true and renders LinkedIn as a link when verified', () => {
-    const verifiedProfile: Profile = {
+  it('renders Download CV when hasCvPdf is true and falls back cleanly when LinkedIn is unverified', () => {
+    const profileWithCvAndMarker: Profile = {
       ...createProfile({ hasCvPdf: true }),
       contact: {
         ...createProfile({ hasCvPdf: true }).contact,
         linkedin: {
           label: 'LinkedIn',
-          href: 'https://www.linkedin.com/in/amr-sadat',
+          href: UNVERIFIED_CV_MARKER,
         },
       },
     };
 
-    render(<ContactSection profile={verifiedProfile} />);
+    render(<ContactSection profile={profileWithCvAndMarker} />);
 
     const cvLink = screen.getByRole('link', { name: 'Download CV' });
     expect(cvLink).toHaveAttribute('href', '/cv.pdf');
 
-    const linkedinLink = screen.getByRole('link', { name: /LinkedIn/i });
-    expect(linkedinLink).toHaveAttribute('href', 'https://www.linkedin.com/in/amr-sadat');
-    expect(linkedinLink).toHaveAttribute('target', '_blank');
-    expect(linkedinLink).toHaveAttribute('rel', 'noopener noreferrer');
+    expect(screen.getByText(/LinkedIn/i)).toBeInTheDocument();
+    expect(screen.getByText(UNVERIFIED_CV_MARKER)).toBeInTheDocument();
+    expect(screen.queryByRole('link', { name: /LinkedIn/i })).not.toBeInTheDocument();
   });
 });

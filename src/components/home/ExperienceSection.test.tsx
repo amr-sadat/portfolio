@@ -1,7 +1,7 @@
 import { render, screen, within } from '@testing-library/react';
 import { MemoryRouter } from 'react-router';
 import { describe, expect, it } from 'vitest';
-import { experienceContent, UNVERIFIED_CV_MARKER } from '../../content';
+import { experienceContent } from '../../content';
 import { ExperienceSection } from './ExperienceSection';
 
 function renderExperience() {
@@ -36,7 +36,7 @@ describe('ExperienceSection', () => {
     expect(secondHeading).toHaveTextContent(/Border Control, e-Visa & Immigration System/i);
   });
 
-  it('renders text-only teasers with role, tenure marker, 3 stack tags, and Read case study links', () => {
+  it('renders text-only teasers with verified role, tenure, 3 stack tags, and Read case study links', () => {
     const { container } = renderExperience();
 
     const flagshipArticles = screen.getAllByRole('article');
@@ -46,13 +46,14 @@ describe('ExperienceSection', () => {
     }
 
     expect(within(siliconExpert).getByText('Senior Front End Developer II')).toBeInTheDocument();
-    expect(within(siliconExpert).getByText(UNVERIFIED_CV_MARKER)).toBeInTheDocument();
+    expect(within(siliconExpert).getByText('Jun 2022 – Present')).toBeInTheDocument();
     const siliconExpertLink = within(siliconExpert).getByRole('link', {
       name: /Read case study/i,
     });
     expect(siliconExpertLink).toHaveAttribute('href', '/experience/siliconexpert');
 
-    expect(within(idemia).getAllByText(UNVERIFIED_CV_MARKER).length).toBeGreaterThanOrEqual(2);
+    expect(within(idemia).getByText('Senior Software Engineer')).toBeInTheDocument();
+    expect(within(idemia).getByText('Jul 2018 – May 2022')).toBeInTheDocument();
     const idemiaLink = within(idemia).getByRole('link', {
       name: /Read case study/i,
     });
@@ -67,20 +68,27 @@ describe('ExperienceSection', () => {
     expect(container.querySelector('img')).toBeNull();
   });
 
-  it('renders always-visible, non-expandable compact rows for earlier pre-IDEMIA roles', () => {
+  it('renders always-visible, non-expandable compact rows for earlier role progression', () => {
     const { container } = renderExperience();
 
-    const earlierHeading = screen.getByRole('heading', { level: 3, name: /Earlier Roles/i });
+    const earlierHeading = screen.getByRole('heading', { level: 3, name: /Role Progression/i });
     expect(earlierHeading).toBeInTheDocument();
 
     const earlierList = earlierHeading.nextElementSibling;
     expect(earlierList?.tagName).toBe('UL');
     const rows = within(earlierList as HTMLElement).getAllByRole('listitem');
-    expect(rows.length).toBeGreaterThanOrEqual(2);
+    expect(rows).toHaveLength(2);
+
+    expect(rows[0]).toHaveTextContent(/SiliconExpert/);
+    expect(rows[0]).toHaveTextContent(/Senior Front End Developer I/);
+    expect(rows[0]).toHaveTextContent(/Jun 2022 – Mar 2025/);
+
+    expect(rows[1]).toHaveTextContent(/IDEMIA Egypt/);
+    expect(rows[1]).toHaveTextContent(/Junior Front End Developer/);
+    expect(rows[1]).toHaveTextContent(/Jul 2018 – Apr 2021/);
 
     for (const row of rows) {
       expect(row).toBeVisible();
-      expect(row).toHaveTextContent(UNVERIFIED_CV_MARKER);
       expect(within(row).queryByRole('button')).toBeNull();
       expect(within(row).queryByRole('link')).toBeNull();
     }

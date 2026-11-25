@@ -1,4 +1,3 @@
-import { UNVERIFIED_CV_MARKER } from '../profile';
 import { siliconExpertSchematic } from './schematics';
 import { ARCHITECTURE_LENSES, type CaseStudy } from './types';
 
@@ -13,7 +12,7 @@ export const siliconExpertCaseStudy: CaseStudy = {
     'Architecture-Public / Internals-Redacted: proprietary schemas, internal endpoints, service names, and confidential metrics are intentionally omitted.',
   contextStrip: {
     role: 'Senior Front End Developer II',
-    tenure: UNVERIFIED_CV_MARKER,
+    tenure: 'Jun 2022 – Present',
     scaleSignals: [
       'Global electronics supply-chain & component intelligence',
       'High-density enterprise data workflows',
@@ -35,7 +34,7 @@ export const siliconExpertCaseStudy: CaseStudy = {
       title: 'Context & System Scope',
       paragraphs: [
         'SiliconExpert’s P5 Platform supports global electronics supply-chain teams who evaluate component lifecycle risk, parametric specifications, compliance posture, and sourcing alternatives across dense enterprise datasets. On the frontend, that translates into data-heavy workspaces where engineers filter, compare, and act on large tables and linked detail views without losing context.',
-        'As a Senior Front End Developer II, I have focused on evolving the frontend architecture so feature teams can ship complex component-intelligence workflows predictably—improving reactive state clarity, render responsiveness, and shared UI and testing standards without disrupting active production delivery.',
+        'Joining as Senior Front End Developer I (Jun 2022 – Mar 2025) and progressing to Senior Front End Developer II (Apr 2025 – Present), I have owned key P5 Platform features from requirements through deployment across Angular 14 through Angular 20—partnering directly with backend engineers on Spring Boot REST API integrations, building reusable Angular components, mentoring junior developers, and evolving reactive state and render performance without disrupting active production delivery.',
       ],
     },
     problem: {
@@ -95,9 +94,9 @@ export const siliconExpertCaseStudy: CaseStudy = {
         'I also integrated AI-Augmented Engineering into daily delivery using Claude Code, Devin AI, and OpenCode. Human ownership stays firmly on system design, Clean Architecture boundaries, explicit specifications, code review, and automated verification, while agentic tools accelerate well-scoped refactors, test scaffolding, and repetitive migration work.',
       ],
       practices: [
-        'Reusable UI building blocks with predictable accessibility, keyboard handling, and narrow prop contracts.',
-        'Focused unit and integration testing around state stores and workflow seams rather than brittle DOM snapshots.',
-        'Explicit SSR safety checks and render-profiling habits before merging changes to data-dense views.',
+        'Reusable Angular UI building blocks with predictable accessibility, keyboard handling, and narrow prop contracts.',
+        'Focused Jasmine unit and component testing around state stores and workflow seams within Agile, Jira-tracked releases.',
+        'Explicit SSR safety checks, REST API integration discipline with backend engineers, and mentoring junior developers through code reviews.',
         'AI-Augmented Engineering workflows (Claude Code, Devin AI, OpenCode) governed by human-authored specs and strict review gates.',
       ],
     },
@@ -108,8 +107,8 @@ export const siliconExpertCaseStudy: CaseStudy = {
       outcomes: [
         'Clearer reactive data flow and reduced state coupling across modernized P5 Platform workflows through NgRx Signal Store and Clean Architecture seams.',
         'Smoother interaction responsiveness on dense component-intelligence views via virtualization and disciplined change detection.',
-        'Higher consistency across reusable UI primitives and faster, review-backed iteration through AI-Augmented Engineering practices.',
-        `Verified quantitative performance and delivery metrics: ${UNVERIFIED_CV_MARKER}.`,
+        'Higher consistency across reusable Angular components and faster, review-backed iteration through AI-Augmented Engineering practices.',
+        'Progressed from Senior Front End Developer I (Jun 2022 – Mar 2025) to Senior Front End Developer II (Apr 2025 – Present) while mentoring junior developers and shipping Jasmine-tested features across Agile, Jira-tracked releases.',
       ],
       retrospective:
         'If I were starting the same modernization again, I would document the Signals-to-RxJS boundary rules even earlier as lightweight executable examples in the repo. Teams adopt architectural standards fastest when the first reference slice is small, inspectable, and backed by tests they can copy directly.',
