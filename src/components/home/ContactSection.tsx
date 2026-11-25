@@ -1,54 +1,14 @@
-import { useEffect, useRef, useState } from 'react';
 import { UNVERIFIED_CV_MARKER, type Profile } from '../../content';
+import { useCopyEmail } from '../../hooks/useCopyEmail';
 import styles from './ContactSection.module.css';
 
 export interface ContactSectionProps {
   readonly profile: Profile;
 }
 
-type CopyState = 'idle' | 'copied' | 'fallback';
-
-const COPY_RESET_MS = 2500;
-
 export function ContactSection({ profile }: ContactSectionProps) {
-  const [copyState, setCopyState] = useState<CopyState>('idle');
-  const resetTimerRef = useRef<number | null>(null);
-
-  useEffect(() => {
-    return () => {
-      if (resetTimerRef.current !== null) {
-        window.clearTimeout(resetTimerRef.current);
-      }
-    };
-  }, []);
-
-  const scheduleReset = () => {
-    if (resetTimerRef.current !== null) {
-      window.clearTimeout(resetTimerRef.current);
-    }
-    resetTimerRef.current = window.setTimeout(() => {
-      setCopyState('idle');
-      resetTimerRef.current = null;
-    }, COPY_RESET_MS);
-  };
-
-  const handleCopyEmail = async () => {
-    const email = profile.contact.email;
-    if (typeof navigator === 'undefined' || !navigator.clipboard?.writeText) {
-      setCopyState('fallback');
-      return;
-    }
-
-    try {
-      await navigator.clipboard.writeText(email);
-      setCopyState('copied');
-      scheduleReset();
-    } catch {
-      setCopyState('fallback');
-    }
-  };
-
   const { email, github, linkedin } = profile.contact;
+  const { copyState, copyEmail } = useCopyEmail(email);
   const hasVerifiedLinkedin = linkedin.href !== UNVERIFIED_CV_MARKER;
 
   return (
@@ -70,7 +30,7 @@ export function ContactSection({ profile }: ContactSectionProps) {
                   ? `${styles.copyButton} ${styles.copyButtonCopied}`
                   : styles.copyButton
               }
-              onClick={handleCopyEmail}
+              onClick={copyEmail}
             >
               {copyState === 'copied' ? 'Copied' : 'Copy Email'}
             </button>

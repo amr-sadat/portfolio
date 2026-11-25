@@ -1,3 +1,28 @@
+export {
+  ARCHITECTURE_LENSES,
+  CASE_STUDY_SECTION_ORDER,
+  caseStudies,
+  getCaseStudyTocItems,
+  idemiaCaseStudy,
+  siliconExpertCaseStudy,
+} from './case-studies';
+export type {
+  ArchitectureLensId,
+  ArchitectureSectionData,
+  CaseStudy,
+  CaseStudySectionId,
+  CaseStudySectionNumber,
+  CaseStudySections,
+  CaseStudyTocItem,
+  ContextSectionData,
+  ContextStripData,
+  CraftSectionData,
+  DiagramSlotConfig,
+  OutcomesSectionData,
+  ProblemSectionData,
+  SiblingCaseStudyRef,
+  TradeoffBreakdown,
+} from './case-studies';
 export { experienceContent } from './experience';
 export type {
   CaseStudyTeaser,

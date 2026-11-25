@@ -1,12 +1,6 @@
-import { Link } from 'react-router';
+import { CaseStudyLayout } from '../components/case-study';
+import { profile, siliconExpertCaseStudy } from '../content';
 
 export function SiliconExpertPage() {
-  return (
-    <main id="main-content">
-      <nav aria-label="Breadcrumb">
-        <Link to="/#experience">← Experience</Link>
-      </nav>
-      <h1>SiliconExpert — P5 Platform Case Study</h1>
-    </main>
-  );
+  return <CaseStudyLayout caseStudy={siliconExpertCaseStudy} profile={profile} />;
 }
