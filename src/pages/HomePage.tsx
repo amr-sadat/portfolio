@@ -2,7 +2,7 @@ import { Link } from 'react-router';
 
 export function HomePage() {
   return (
-    <main>
+    <main id="main-content">
       <h1>Amr Sadat Abou Hegab</h1>
       <section id="about" aria-labelledby="about-heading">
         <h2 id="about-heading">About</h2>

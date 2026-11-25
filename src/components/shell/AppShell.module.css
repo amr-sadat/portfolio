@@ -1,0 +1,28 @@
+.shell {
+  min-height: 100dvh;
+  display: flex;
+  flex-direction: column;
+}
+
+.content {
+  flex: 1 0 auto;
+}
+
+.skipLink {
+  position: fixed;
+  top: var(--space-3);
+  left: var(--space-4);
+  z-index: 100;
+  padding: var(--space-3) var(--space-4);
+  border-radius: var(--radius-cta);
+  background: var(--color-accent-fill-gradient);
+  color: var(--color-accent-on-fill);
+  font-weight: 600;
+  text-decoration: none;
+  transform: translateY(-200%);
+  transition: transform var(--duration-fast) var(--ease-standard);
+}
+
+.skipLink:focus-visible {
+  transform: translateY(0);
+}

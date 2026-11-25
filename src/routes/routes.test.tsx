@@ -1,19 +1,25 @@
-import { render, screen } from '@testing-library/react';
+import { render, screen, within } from '@testing-library/react';
 import { createMemoryRouter, RouterProvider } from 'react-router';
 import { describe, expect, it } from 'vitest';
+import { ThemeProvider } from '../theme/ThemeProvider';
 import { routes } from './routes';
 
 function renderRoute(initialPath: string) {
   const router = createMemoryRouter(routes, { initialEntries: [initialPath] });
-  return render(<RouterProvider router={router} />);
+  return render(
+    <ThemeProvider>
+      <RouterProvider router={router} />
+    </ThemeProvider>,
+  );
 }
 
 describe('v1 routes', () => {
-  it('renders the home route at / with semantic main landmark and heading', () => {
+  it('renders the home route at / with AppShell landmarks and semantic heading', () => {
     renderRoute('/');
 
-    const main = screen.getByRole('main');
-    expect(main).toBeInTheDocument();
+    expect(screen.getByRole('banner')).toBeInTheDocument();
+    expect(screen.getByRole('main')).toBeInTheDocument();
+    expect(screen.getByRole('contentinfo')).toBeInTheDocument();
     expect(
       screen.getByRole('heading', { level: 1, name: /amr sadat abou hegab/i }),
     ).toBeInTheDocument();
@@ -22,9 +28,12 @@ describe('v1 routes', () => {
   it('renders the SiliconExpert Case Study route at /experience/siliconexpert', () => {
     renderRoute('/experience/siliconexpert');
 
-    expect(screen.getByRole('main')).toBeInTheDocument();
-    expect(screen.getByRole('heading', { level: 1, name: /siliconexpert/i })).toBeInTheDocument();
-    expect(screen.getByRole('link', { name: /experience/i })).toHaveAttribute(
+    const main = screen.getByRole('main');
+    expect(main).toBeInTheDocument();
+    expect(
+      within(main).getByRole('heading', { level: 1, name: /siliconexpert/i }),
+    ).toBeInTheDocument();
+    expect(within(main).getByRole('link', { name: /experience/i })).toHaveAttribute(
       'href',
       '/#experience',
     );
@@ -33,9 +42,10 @@ describe('v1 routes', () => {
   it('renders the IDEMIA Egypt Case Study route at /experience/idemia', () => {
     renderRoute('/experience/idemia');
 
-    expect(screen.getByRole('main')).toBeInTheDocument();
-    expect(screen.getByRole('heading', { level: 1, name: /idemia/i })).toBeInTheDocument();
-    expect(screen.getByRole('link', { name: /experience/i })).toHaveAttribute(
+    const main = screen.getByRole('main');
+    expect(main).toBeInTheDocument();
+    expect(within(main).getByRole('heading', { level: 1, name: /idemia/i })).toBeInTheDocument();
+    expect(within(main).getByRole('link', { name: /experience/i })).toHaveAttribute(
       'href',
       '/#experience',
     );
@@ -44,10 +54,13 @@ describe('v1 routes', () => {
   it('renders the custom 404 page at /404 with links back to Home and Experience', () => {
     renderRoute('/404');
 
-    expect(screen.getByRole('main')).toBeInTheDocument();
-    expect(screen.getByRole('heading', { level: 1, name: /not found|404/i })).toBeInTheDocument();
-    expect(screen.getByRole('link', { name: /home/i })).toHaveAttribute('href', '/');
-    expect(screen.getByRole('link', { name: /experience/i })).toHaveAttribute(
+    const main = screen.getByRole('main');
+    expect(main).toBeInTheDocument();
+    expect(
+      within(main).getByRole('heading', { level: 1, name: /not found|404/i }),
+    ).toBeInTheDocument();
+    expect(within(main).getByRole('link', { name: /home/i })).toHaveAttribute('href', '/');
+    expect(within(main).getByRole('link', { name: /experience/i })).toHaveAttribute(
       'href',
       '/#experience',
     );
