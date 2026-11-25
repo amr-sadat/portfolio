@@ -4,7 +4,7 @@ status: accepted
 
 # Hybrid Information Architecture: Single-Scroll Home with Dedicated Case Study Routes
 
-The portfolio is a **hybrid**: a single-scroll narrative home page plus a dedicated pre-rendered page for each flagship **Case Study**.
+The portfolio is a **hybrid**: a single-scroll narrative home page plus a dedicated route for each flagship **Case Study**.
 
 The home page `/` runs in this order:
 
@@ -27,7 +27,7 @@ Each Case Study lives at `/experience/siliconexpert` or `/experience/idemia`. Th
 
 ## Consequences
 
-- **The v1 route set is fixed**: `/`, `/experience/siliconexpert`, `/experience/idemia`, and a pre-rendered custom 404 page that links back to home and Experience. Home section anchors are `#about`, `#experience`, `#projects`, and `#contact`. Adding a route needs a new decision.
+- **The v1 route set is fixed**: `/`, `/experience/siliconexpert`, `/experience/idemia`, and a custom 404 route (`/404` and unknown-path fallback) that links back to home and Experience. Home section anchors are `#about`, `#experience`, `#projects`, and `#contact`. Adding a route needs a new decision.
 - **Navigation**: a slim sticky top bar with no logo (ADR-0002). On desktop it holds anchor links (*About · Experience · Projects · Contact*, matching top-to-bottom section order) that highlight as you scroll, plus the Daylight/Obsidian toggle. On mobile it shows only the theme toggle and a **Menu** button that opens a full-screen sheet; focus stays inside the sheet and Esc closes it. Case Study pages add the back link.
 - **Mobile parity**: same section order, single column, nothing hidden. Tap targets are at least 44px, and anchor jumps leave room for the sticky bar (`scroll-margin-top`).
 - **The CV is a gated slot**: the Download CV links in the Hero and Contact render only once a privacy-safe `/cv.pdf` exists. Producing that PDF is a separate follow-up decision.

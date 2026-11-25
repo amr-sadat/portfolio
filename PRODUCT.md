@@ -8,7 +8,7 @@ web
 
 ## Stack
 
-React 19 + TypeScript (`strict`) on React Router v7 framework mode (Vite), every route pre-rendered to static HTML, CSS Modules over native CSS custom-property tokens, CSS-first motion, hosted on Cloudflare Pages. No backend, no analytics. See `docs/adr/0004-react-router-prerendered-static-site-on-cloudflare-pages.md`.
+React 19 + TypeScript (`strict`) on Vite with React Router v8 (library mode) as a static-hosted SPA, CSS Modules over native CSS custom-property tokens, CSS-first motion, hosted on Cloudflare Pages. No backend, no analytics. See `docs/adr/0004-react-router-prerendered-static-site-on-cloudflare-pages.md`.
 
 ## Users
 

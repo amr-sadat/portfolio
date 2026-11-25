@@ -2,14 +2,14 @@
 status: accepted
 ---
 
-# Pre-rendered React Router Static Site, CSS-Module Tokens, and Cloudflare Pages Hosting
+# React Router SPA, CSS-Module Tokens, and Cloudflare Pages Hosting
 
-The portfolio is built with **React 19 + TypeScript (`strict`)** on **React Router v7 framework mode (Vite)**, with every route **pre-rendered to static HTML at build time** (`ssr: false`) and hydrated client-side. There is no server runtime. Styling uses **CSS Modules over native CSS custom-property tokens**, with theming switched via `[data-theme="daylight|obsidian"]` on `<html>`. Motion is **CSS-first** (transitions, keyframes, View Transitions API, Web Animations API), always honoring `prefers-reduced-motion`. The static build deploys to **Cloudflare Pages** with per-PR preview URLs. A GitHub Actions workflow gates every PR on typecheck, lint, and tests, and `main` auto-deploys to production. The site launches on `*.pages.dev` and moves to a custom domain (e.g. `amrsadat.dev`, availability checked at purchase) registered via Cloudflare Registrar before public launch.
+The portfolio is built with **React 19 + TypeScript (`strict`)** on **Vite** with **React Router v8 (library mode)** as a **client-side Single Page Application (SPA)** deployed as static assets (`dist/`) to **Cloudflare Pages**. There is no server runtime or SSR. Styling uses **CSS Modules over native CSS custom-property tokens**, with theming switched via `[data-theme="daylight|obsidian"]` on `<html>`. Motion is **CSS-first** (transitions, keyframes, View Transitions API, Web Animations API), always honoring `prefers-reduced-motion`. The static SPA build deploys to **Cloudflare Pages** (which automatically serves `index.html` for SPA client routes) with per-PR preview URLs. A GitHub Actions workflow gates every PR on typecheck, lint, tests, CSP verification, and E2E accessibility checks, and `main` auto-deploys to production. The site launches on `*.pages.dev` and moves to a custom domain (e.g. `amrsadat.dev`, availability checked at purchase) registered via Cloudflare Registrar before public launch.
 
 ## Considered Options
 
-- **Plain Vite + React SPA**: Rejected because it ships empty HTML until JavaScript runs, which weakens SEO, Open Graph link previews, and first paint for hiring-manager visits.
-- **Next.js static export**: Rejected as heavier and more framework-specific. It also leans toward Vercel hosting, while React Router framework mode offers modern React data/meta APIs on a plain Vite toolchain.
+- **React Router v7 framework mode with build-time static pre-rendering**: Reconsidered and deferred in favor of a plain Vite + React Router library-mode SPA to keep the build pipeline, local preview, and route setup minimal and transparent without framework-mode build plugins.
+- **Next.js static export**: Rejected as heavier and more framework-specific. It also leans toward Vercel hosting, while Vite + React Router library mode keeps the toolchain lean and standard.
 - **Tailwind CSS v4**: Rejected in favor of CSS Modules + native custom properties. The bespoke visuals (pearl stages, layered shadows, hairline glass) and the ADR-0001 token contract for SVG diagrams are cleaner with a single framework-agnostic token file, which reinforces the framework-agnostic mastery signal of ADR-0002.
 - **Motion (Framer Motion) as the default animation layer**: Rejected to protect bundle size and performance. It may be lazy-loaded only for a specific signature touch that truly needs layout/shared-element animation (decided in issue #7).
 - **Vercel or GitHub Pages hosting**: Vercel was rejected for tighter free-tier limits and its Next.js lean. GitHub Pages was rejected for missing preview deploys and limited header/redirect control.
