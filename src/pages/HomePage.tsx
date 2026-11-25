@@ -3,7 +3,10 @@ import { ContactSection } from '../components/home/ContactSection';
 import { ExperienceSection } from '../components/home/ExperienceSection';
 import { HeroSection } from '../components/home/HeroSection';
 import { ProjectsSection } from '../components/home/ProjectsSection';
-import { experienceContent, homeContent, profile, projectsContent } from '../content';
+import { experienceContent } from '../content/experience';
+import { homeContent } from '../content/home';
+import { profile } from '../content/profile';
+import { projectsContent } from '../content/projects';
 
 export function HomePage() {
   return (

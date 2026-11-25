@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://amr-sadat-portfolio.pages.dev/sitemap.xml

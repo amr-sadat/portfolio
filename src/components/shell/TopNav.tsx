@@ -1,10 +1,13 @@
-import { useRef, useState } from 'react';
+import { lazy, Suspense, useRef, useState } from 'react';
 import { Link, useLocation } from 'react-router';
 import { useScrollSpy } from '../../hooks/useScrollSpy';
-import { MobileMenuSheet } from './MobileMenuSheet';
 import { NAV_SECTIONS, type NavSectionItem } from './navItems';
 import { ThemeToggle } from './ThemeToggle';
 import styles from './TopNav.module.css';
+
+const MobileMenuSheet = lazy(() =>
+  import('./MobileMenuSheet').then((m) => ({ default: m.MobileMenuSheet })),
+);
 
 const CASE_STUDY_PATHS = new Set(['/experience/siliconexpert', '/experience/idemia']);
 const NAV_SECTION_IDS: readonly NavSectionItem['id'][] = NAV_SECTIONS.map((s) => s.id);
@@ -79,13 +82,17 @@ export function TopNav() {
         </div>
       </header>
 
-      <MobileMenuSheet
-        isOpen={menuOpen}
-        onClose={handleCloseMenu}
-        isHome={isHome}
-        isCaseStudy={isCaseStudy}
-        activeSection={activeSection}
-      />
+      {menuOpen && (
+        <Suspense fallback={null}>
+          <MobileMenuSheet
+            isOpen={menuOpen}
+            onClose={handleCloseMenu}
+            isHome={isHome}
+            isCaseStudy={isCaseStudy}
+            activeSection={activeSection}
+          />
+        </Suspense>
+      )}
     </>
   );
 }

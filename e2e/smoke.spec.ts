@@ -63,6 +63,7 @@ test('switches to Obsidian, persists across reload, and passes axe across key ro
   for (const path of ['/', '/experience/siliconexpert', '/404']) {
     await page.goto(path);
     await expect(page.locator('html')).toHaveAttribute('data-theme', 'obsidian');
+    await expect(page.getByRole('heading', { level: 1 })).toBeVisible();
     const results = await new AxeBuilder({ page }).analyze();
     expect(results.violations).toEqual([]);
   }

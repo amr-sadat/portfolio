@@ -8,7 +8,9 @@ function loadInlineHeadScript(): string {
   if (!headMatch?.[1]) {
     throw new Error('Could not find <head> in index.html');
   }
-  const scriptMatch = headMatch[1].match(/<script(?![^>]*\bsrc=)[^>]*>([\s\S]*?)<\/script>/i);
+  const scriptMatch = headMatch[1].match(
+    /<script(?![^>]*\bsrc=)(?![^>]*\btype=["']application\/ld\+json["'])[^>]*>([\s\S]*?)<\/script>/i,
+  );
   if (!scriptMatch?.[1]) {
     throw new Error('Could not find inline <script> in <head> of index.html');
   }

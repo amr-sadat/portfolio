@@ -128,7 +128,7 @@ describe('TopNav and MobileMenuSheet', () => {
     expect(backLink).toHaveAttribute('href', '/#experience');
   });
 
-  it('opens the mobile menu sheet with focus trap, scroll lock, Esc close, and link auto-close', () => {
+  it('opens the mobile menu sheet with focus trap, scroll lock, Esc close, and link auto-close', async () => {
     renderTopNav('/');
 
     const menuButton = screen.getByRole('button', { name: /menu/i });
@@ -136,7 +136,7 @@ describe('TopNav and MobileMenuSheet', () => {
 
     fireEvent.click(menuButton);
 
-    const dialog = screen.getByRole('dialog', { name: /navigation/i });
+    const dialog = await screen.findByRole('dialog', { name: /navigation/i });
     expect(dialog).toHaveAttribute('aria-modal', 'true');
     expect(menuButton).toHaveAttribute('aria-expanded', 'true');
     expect(document.body.style.overflow).toBe('hidden');

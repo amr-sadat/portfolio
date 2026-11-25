@@ -1,4 +1,4 @@
-import { UNVERIFIED_CV_MARKER, type Profile } from '../../content';
+import { UNVERIFIED_CV_MARKER, type Profile } from '../../content/profile';
 import { useCopyEmail } from '../../hooks/useCopyEmail';
 import styles from './ContactSection.module.css';
 
