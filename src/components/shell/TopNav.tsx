@@ -29,24 +29,28 @@ export function TopNav() {
       return;
     }
 
-    const visibleRatios = new Map<string, number>();
+    const visibleScores = new Map<string, number>();
 
     const observer = new IntersectionObserver(
       (entries) => {
         for (const entry of entries) {
           if (entry.isIntersecting) {
-            visibleRatios.set(entry.target.id, entry.intersectionRatio);
+            const visibleHeight = entry.intersectionRect?.height ?? 0;
+            visibleScores.set(
+              entry.target.id,
+              visibleHeight > 0 ? visibleHeight : entry.intersectionRatio,
+            );
           } else {
-            visibleRatios.delete(entry.target.id);
+            visibleScores.delete(entry.target.id);
           }
         }
 
         let topId: NavSectionItem['id'] | null = null;
-        let maxRatio = -1;
+        let maxScore = -1;
         for (const section of NAV_SECTIONS) {
-          const ratio = visibleRatios.get(section.id);
-          if (ratio !== undefined && ratio > maxRatio) {
-            maxRatio = ratio;
+          const score = visibleScores.get(section.id);
+          if (score !== undefined && score > maxScore) {
+            maxScore = score;
             topId = section.id;
           }
         }
@@ -57,7 +61,7 @@ export function TopNav() {
       },
       {
         rootMargin: '-20% 0px -55% 0px',
-        threshold: [0, 0.25, 0.5, 0.75, 1],
+        threshold: [0, 0.1, 0.25, 0.5, 0.75, 1],
       },
     );
 
@@ -65,8 +69,23 @@ export function TopNav() {
       observer.observe(el);
     }
 
+    const handleScroll = () => {
+      const scrolledToBottom =
+        window.scrollY > 0 &&
+        window.scrollY + window.innerHeight >= document.documentElement.scrollHeight - 2;
+      if (scrolledToBottom) {
+        const lastSection = NAV_SECTIONS[NAV_SECTIONS.length - 1];
+        if (lastSection) {
+          setActiveSection(lastSection.id);
+        }
+      }
+    };
+
+    window.addEventListener('scroll', handleScroll, { passive: true });
+
     return () => {
       observer.disconnect();
+      window.removeEventListener('scroll', handleScroll);
     };
   }, [isHome]);
 
