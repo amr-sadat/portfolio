@@ -7,20 +7,13 @@ interface MobileMenuSheetProps {
   isOpen: boolean;
   onClose: () => void;
   isHome: boolean;
-  isCaseStudy: boolean;
   activeSection: NavSectionItem['id'] | null;
 }
 
 const FOCUSABLE_SELECTOR =
   'a[href], button:not([disabled]), input:not([disabled]), select:not([disabled]), textarea:not([disabled]), [tabindex]:not([tabindex="-1"])';
 
-export function MobileMenuSheet({
-  isOpen,
-  onClose,
-  isHome,
-  isCaseStudy,
-  activeSection,
-}: MobileMenuSheetProps) {
+export function MobileMenuSheet({ isOpen, onClose, isHome, activeSection }: MobileMenuSheetProps) {
   const sheetRef = useRef<HTMLDivElement>(null);
   const closeButtonRef = useRef<HTMLButtonElement>(null);
   const onCloseRef = useRef(onClose);
@@ -110,12 +103,6 @@ export function MobileMenuSheet({
       </div>
 
       <nav aria-label="Mobile navigation" className={styles.nav}>
-        {isCaseStudy && (
-          <Link to="/#experience" className={styles.backLink} onClick={onClose}>
-            ← Experience
-          </Link>
-        )}
-
         <ul className={styles.list}>
           {NAV_SECTIONS.map((section) => {
             const isActive = isHome && activeSection === section.id;

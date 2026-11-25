@@ -3,8 +3,6 @@ import { expect, test } from '@playwright/test';
 
 const ROUTES = [
   { path: '/', heading: /amr sadat abou hegab/i },
-  { path: '/experience/siliconexpert', heading: /siliconexpert/i },
-  { path: '/experience/idemia', heading: /idemia/i },
   { path: '/404', heading: /404 — page not found/i },
   { path: '/does-not-exist', heading: /404 — page not found/i },
 ];
@@ -119,7 +117,7 @@ test('home Hero and About pass layout and axe checks at desktop (1280px) and mob
 
     const aboutSection = page.locator('section#about');
     await expect(aboutSection).toBeVisible();
-    await expect(aboutSection.getByRole('heading', { level: 3 })).toHaveCount(3);
+    await expect(aboutSection.getByRole('heading', { level: 3 })).toHaveCount(2);
 
     const axeResults = await new AxeBuilder({ page }).analyze();
     expect(axeResults.violations).toEqual([]);

@@ -41,12 +41,12 @@ function renderTopNav(initialPath = '/') {
         ),
       },
       {
-        path: '/experience/siliconexpert',
+        path: '/404',
         element: (
           <>
             <TopNav />
             <main id="main-content">
-              <h1>SiliconExpert</h1>
+              <h1>404</h1>
             </main>
           </>
         ),
@@ -114,12 +114,17 @@ describe('TopNav and MobileMenuSheet', () => {
     expect(within(nav).getByRole('link', { name: 'About' })).not.toHaveAttribute('aria-current');
   });
 
-  it('shows the ← Experience back link on Case Study routes', () => {
-    renderTopNav('/experience/siliconexpert');
+  it('links section items back to /#section from non-home routes without a case study back link', () => {
+    renderTopNav('/404');
 
     const header = screen.getByRole('banner');
-    const backLink = within(header).getByRole('link', { name: /← experience/i });
-    expect(backLink).toHaveAttribute('href', '/#experience');
+    expect(within(header).queryByRole('link', { name: /← experience/i })).not.toBeInTheDocument();
+
+    const nav = within(header).getByRole('navigation', { name: /primary/i });
+    expect(within(nav).getByRole('link', { name: 'Experience' })).toHaveAttribute(
+      'href',
+      '/#experience',
+    );
   });
 
   it('opens the mobile menu sheet with focus trap, scroll lock, Esc close, and link auto-close', async () => {

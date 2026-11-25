@@ -33,7 +33,7 @@ describe('typed content contract', () => {
     expect(withoutCv.hasCvPdf).toBe(false);
   });
 
-  it('provides Hero copy and three About architectural beats', () => {
+  it('provides Hero copy and two About architectural beats', () => {
     expect(homeContent.hero.name).toBe('Amr Sadat Abou Hegab');
     expect(homeContent.hero.role).toBe('Senior Frontend Engineer');
     expect(homeContent.hero.primaryCta).toEqual({
@@ -45,6 +45,6 @@ describe('typed content contract', () => {
       href: '/cv.pdf',
     });
     expect(homeContent.about.heading).toBe('About');
-    expect(homeContent.about.beats).toHaveLength(3);
+    expect(homeContent.about.beats).toHaveLength(2);
   });
 });

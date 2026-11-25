@@ -27,28 +27,6 @@ const CARDS = [
     footerRight: 'EGYPT · UTC+2 · REMOTE',
     variant: 'home',
   },
-  {
-    filename: 'siliconexpert.png',
-    kicker: 'ARCHITECTURAL CASE STUDY · 01',
-    title: 'SiliconExpert (P5 Platform)',
-    subtitle: 'Architectural Case Study',
-    description:
-      'Deterministic Signals & NgRx Signal Store state, Clean Architecture boundaries, and sustained high-density render performance.',
-    footerLeft: 'AMR SADAT ABOU HEGAB · SENIOR FRONTEND ENGINEER',
-    footerRight: 'ARCHITECTURE-PUBLIC · INTERNALS-REDACTED',
-    variant: 'case-study',
-  },
-  {
-    filename: 'idemia.png',
-    kicker: 'ARCHITECTURAL CASE STUDY · 02',
-    title: 'IDEMIA Egypt',
-    subtitle: 'Architectural Case Study',
-    description:
-      'Zero-ambiguity operator & citizen web architecture for national-scale border control, e-Visa, and immigration platforms.',
-    footerLeft: 'AMR SADAT ABOU HEGAB · SENIOR FRONTEND ENGINEER',
-    footerRight: 'ARCHITECTURE-PUBLIC · INTERNALS-REDACTED',
-    variant: 'case-study',
-  },
 ];
 
 function renderCardHtml(card) {

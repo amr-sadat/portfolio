@@ -3,7 +3,7 @@ import { resolve } from 'node:path';
 import AxeBuilder from '@axe-core/playwright';
 import { expect, test } from '@playwright/test';
 
-const ALL_FOUR_ROUTES = ['/', '/experience/siliconexpert', '/experience/idemia', '/404'] as const;
+const ALL_ROUTES = ['/', '/404'] as const;
 
 const VIEWPORTS = [
   { name: 'desktop', width: 1280, height: 800 },
@@ -11,12 +11,12 @@ const VIEWPORTS = [
 ] as const;
 
 for (const viewport of VIEWPORTS) {
-  test(`all 4 routes pass axe-core in dark mode at ${viewport.name} (${viewport.width}x${viewport.height})`, async ({
+  test(`all routes pass axe-core in dark mode at ${viewport.name} (${viewport.width}x${viewport.height})`, async ({
     page,
   }) => {
     await page.setViewportSize({ width: viewport.width, height: viewport.height });
 
-    for (const path of ALL_FOUR_ROUTES) {
+    for (const path of ALL_ROUTES) {
       await page.goto(path);
 
       await expect(page.getByRole('heading', { level: 1 })).toBeVisible();
@@ -58,15 +58,13 @@ test('built dist/index.html contains base SEO head tags, OG card, canonical, ico
     '/favicon.svg',
     '/apple-touch-icon.png',
     '/og/home.png',
-    '/og/siliconexpert.png',
-    '/og/idemia.png',
   ]) {
     const response = await request.get(assetPath);
     expect(response.status(), `Expected 200 for ${assetPath}`).toBe(200);
   }
 });
 
-test('updates document.title, canonical, OG/Twitter meta, robots noindex, and Person JSON-LD across route navigation', async ({
+test('renders Experience role cards on a single page and updates metadata across / and /404', async ({
   page,
 }) => {
   await page.setViewportSize({ width: 1280, height: 800 });
@@ -85,38 +83,10 @@ test('updates document.title, canonical, OG/Twitter meta, robots noindex, and Pe
   await expect(page.locator('meta[name="robots"]')).toHaveCount(0);
   await expect(page.locator('script#person-jsonld[type="application/ld+json"]')).toHaveCount(1);
 
-  // Navigate to SiliconExpert Case Study
-  await page
-    .getByRole('link', { name: /read case study/i })
-    .first()
-    .click();
-  await expect(page).toHaveURL(/\/experience\/siliconexpert$/);
-  await expect(page).toHaveTitle(/SiliconExpert \(P5 Platform\)/);
-  await expect(page.locator('link[rel="canonical"]')).toHaveAttribute(
-    'href',
-    /\/experience\/siliconexpert$/,
-  );
-  await expect(page.locator('meta[property="og:image"]')).toHaveAttribute(
-    'content',
-    /\/og\/siliconexpert\.png$/,
-  );
-  await expect(page.locator('meta[property="og:type"]')).toHaveAttribute('content', 'article');
-  await expect(page.locator('meta[name="robots"]')).toHaveCount(0);
-  await expect(page.locator('script#person-jsonld')).toHaveCount(0);
-
-  // Navigate to IDEMIA Egypt Case Study via sibling link
-  await page.getByRole('link', { name: /idemia egypt/i }).click();
-  await expect(page).toHaveURL(/\/experience\/idemia$/);
-  await expect(page).toHaveTitle(/IDEMIA Egypt/);
-  await expect(page.locator('link[rel="canonical"]')).toHaveAttribute(
-    'href',
-    /\/experience\/idemia$/,
-  );
-  await expect(page.locator('meta[property="og:image"]')).toHaveAttribute(
-    'content',
-    /\/og\/idemia\.png$/,
-  );
-  await expect(page.locator('script#person-jsonld')).toHaveCount(0);
+  // Experience displays 4 role cards with no case study links
+  const experienceCards = page.locator('section#experience article');
+  await expect(experienceCards).toHaveCount(4);
+  await expect(page.getByRole('link', { name: /read case study/i })).toHaveCount(0);
 
   // Navigate to /404 -> noindex
   await page.goto('/404');
@@ -132,7 +102,7 @@ test('updates document.title, canonical, OG/Twitter meta, robots noindex, and Pe
   await expect(page.locator('script#person-jsonld[type="application/ld+json"]')).toHaveCount(1);
 });
 
-test('desktop keyboard tab flow covers skip-to-content, sticky nav, copy email, Case Study ToC, and Architecture Lenses', async ({
+test('desktop keyboard tab flow covers skip-to-content, sticky nav, and copy email', async ({
   page,
   context,
 }) => {
@@ -165,26 +135,6 @@ test('desktop keyboard tab flow covers skip-to-content, sticky nav, copy email, 
   await expect(copyButton).toBeFocused();
   await page.keyboard.press('Enter');
   await expect(page.getByRole('button', { name: /copied/i })).toBeVisible();
-
-  // 4. Case Study ToC & Architecture Lenses operable via keyboard
-  await page.goto('/experience/siliconexpert');
-  const toc = page.getByRole('navigation', { name: /on this page/i });
-  const archTocLink = toc.getByRole('link', { name: /03.*architectural decisions/i });
-  await archTocLink.focus();
-  await expect(archTocLink).toBeFocused();
-  await page.keyboard.press('Enter');
-  await expect(page).toHaveURL(/\/experience\/siliconexpert#architecture$/);
-
-  const lensGroup = page.getByRole('group', { name: /architecture lenses/i });
-  const dataFlowBtn = lensGroup.getByRole('button', { name: 'Data flow' });
-  const structureBtn = lensGroup.getByRole('button', { name: 'Structure' });
-  await dataFlowBtn.focus();
-  await expect(dataFlowBtn).toBeFocused();
-  await page.keyboard.press('Tab');
-  await expect(structureBtn).toBeFocused();
-  await page.keyboard.press('Enter');
-  await expect(structureBtn).toHaveAttribute('aria-pressed', 'true');
-  await expect(dataFlowBtn).toHaveAttribute('aria-pressed', 'false');
 });
 
 test('mobile keyboard flow traps focus inside navigation sheet and restores focus on Escape', async ({
