@@ -14,6 +14,7 @@
     "test": "vitest run",
     "test:watch": "vitest",
     "verify:csp": "node scripts/verify-csp.mjs",
+    "verify:budgets": "node scripts/verify-budgets.mjs",
     "test:e2e": "playwright test"
   },
   "dependencies": {

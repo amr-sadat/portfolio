@@ -1,11 +1,16 @@
-import { useEffect } from 'react';
+import { Suspense, useEffect } from 'react';
 import { Outlet, useLocation } from 'react-router';
+import { syncDocumentMetadata } from '../../seo/metadata';
 import { FooterColophon } from './FooterColophon';
 import { TopNav } from './TopNav';
 import styles from './AppShell.module.css';
 
 export function AppShell() {
   const { pathname, hash } = useLocation();
+
+  useEffect(() => {
+    syncDocumentMetadata(pathname);
+  }, [pathname]);
 
   useEffect(() => {
     if (hash) {
@@ -28,7 +33,9 @@ export function AppShell() {
       </a>
       <TopNav />
       <div className={styles.content}>
-        <Outlet />
+        <Suspense fallback={null}>
+          <Outlet />
+        </Suspense>
       </div>
       <FooterColophon />
     </div>

@@ -19,7 +19,7 @@ describe('typed content contract', () => {
     const contact: ContactChannels = profile.contact;
     expect(contact.email).toBe('amrsadat2017@gmail.com');
     expect(contact.github.href).toBe('https://github.com/amr-sadat');
-    expect(contact.linkedin.href).toBe(UNVERIFIED_CV_MARKER);
+    expect(contact.linkedin.href).toBe('https://www.linkedin.com/in/amrsadat/');
     expect(Object.keys(contact).sort()).toEqual(['email', 'github', 'linkedin']);
   });
 

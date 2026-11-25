@@ -11,9 +11,13 @@ export function hashScript(scriptContent) {
 
 export function extractInlineScripts(html) {
   const scripts = [];
-  const regex = /<script(?![^>]*\bsrc=)[^>]*>([\s\S]*?)<\/script>/gi;
+  const regex = /<script(?![^>]*\bsrc=)([^>]*)>([\s\S]*?)<\/script>/gi;
   for (const match of html.matchAll(regex)) {
-    const content = match[1];
+    const attrs = match[1] ?? '';
+    const content = match[2];
+    if (/\btype\s*=\s*["']application\/ld\+json["']/i.test(attrs)) {
+      continue;
+    }
     if (content && content.trim().length > 0) {
       scripts.push(content);
     }
@@ -21,13 +25,27 @@ export function extractInlineScripts(html) {
   return scripts;
 }
 
+export function extractJsonLdScripts(html) {
+  const blocks = [];
+  const regex =
+    /<script(?![^>]*\bsrc=)[^>]*\btype\s*=\s*["']application\/ld\+json["'][^>]*>([\s\S]*?)<\/script>/gi;
+  for (const match of html.matchAll(regex)) {
+    blocks.push(match[1] ?? '');
+  }
+  return blocks;
+}
+
 export function verifyCsp({ html, headers }) {
   const errors = [];
   const inlineScripts = extractInlineScripts(html);
+  const jsonLdBlocks = extractJsonLdScripts(html);
 
-  if (inlineScripts.length === 0) {
-    errors.push('No inline <script> found in built HTML.');
-    return { ok: false, errors, hashes: [] };
+  for (const block of jsonLdBlocks) {
+    try {
+      JSON.parse(block);
+    } catch {
+      errors.push('Invalid JSON inside <script type="application/ld+json"> block.');
+    }
   }
 
   const hashes = inlineScripts.map(hashScript);
@@ -87,7 +105,8 @@ function runCli() {
     process.exit(1);
   }
 
-  console.log(`CSP verified (${result.hashes.join(', ')}).`);
+  const detail = result.hashes.length > 0 ? result.hashes.join(', ') : 'no inline scripts';
+  console.log(`CSP verified (${detail}).`);
 }
 
 if (process.argv[1] && fileURLToPath(import.meta.url) === resolve(process.argv[1])) {

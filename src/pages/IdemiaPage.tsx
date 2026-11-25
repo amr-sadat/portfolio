@@ -1,12 +1,7 @@
-import { Link } from 'react-router';
+import { CaseStudyLayout } from '../components/case-study';
+import { idemiaCaseStudy } from '../content/case-studies/idemia';
+import { profile } from '../content/profile';
 
 export function IdemiaPage() {
-  return (
-    <main id="main-content">
-      <nav aria-label="Breadcrumb">
-        <Link to="/#experience">← Experience</Link>
-      </nav>
-      <h1>IDEMIA Egypt — Border Control, e-Visa &amp; Immigration Case Study</h1>
-    </main>
-  );
+  return <CaseStudyLayout caseStudy={idemiaCaseStudy} profile={profile} />;
 }

@@ -36,10 +36,8 @@ html {
   background-color: var(--color-scrollbar-thumb-hover);
 }
 
-/* Mode-adaptive ambient canvas:
-   - Daylight: pure #FFFFFF surface with zero background grid.
-   - Obsidian: #0A0A0C + subtle warm copper top radial glow & faint masked dot-grid. */
-[data-theme='obsidian'] body {
+/* Ambient canvas: #0A0A0C + subtle warm copper top radial glow & faint masked dot-grid. */
+body {
   position: relative;
   isolation: isolate;
   background-color: var(--color-bg);
@@ -52,7 +50,7 @@ html {
   background-repeat: no-repeat;
 }
 
-[data-theme='obsidian'] body::before {
+body::before {
   content: '';
   position: fixed;
   inset: 0;
@@ -73,14 +71,10 @@ html {
 }
 
 .surface-card {
-  background-color: var(--color-surface-elevated);
+  background: linear-gradient(180deg, var(--color-stage-start) 0%, var(--color-stage-end) 100%);
   border: 1px solid var(--color-border-subtle);
   border-radius: var(--radius-card);
   box-shadow: var(--shadow-card);
-}
-
-[data-theme='obsidian'] .surface-card {
-  background: linear-gradient(180deg, var(--color-stage-start) 0%, var(--color-stage-end) 100%);
   backdrop-filter: blur(12px);
 }
 

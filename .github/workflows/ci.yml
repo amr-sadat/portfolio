@@ -40,6 +40,9 @@ jobs:
       - name: Verify CSP hash
         run: npm run verify:csp
 
+      - name: Verify performance budgets
+        run: npm run verify:budgets
+
       - name: Install Playwright Chromium
         run: npx playwright install --with-deps chromium
 

@@ -1,0 +1,196 @@
+.section {
+  max-width: var(--container-max);
+  margin: 0 auto;
+  padding: var(--space-section) var(--space-5);
+  border-top: 1px solid var(--color-border-subtle);
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: minmax(0, var(--toc-width)) minmax(0, var(--prose-measure));
+  gap: var(--space-8) var(--space-12);
+  align-items: start;
+}
+
+.content {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-6);
+  min-width: 0;
+}
+
+.lead {
+  font-size: var(--text-prose);
+  line-height: var(--leading-prose);
+  color: var(--color-ink-muted);
+}
+
+.primaryActions {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--space-3);
+}
+
+.copyButton,
+.mailtoLink,
+.cvLink {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 44px;
+  padding: 0 var(--space-5);
+  border-radius: var(--radius-cta);
+  font-size: var(--text-ui);
+  font-weight: 600;
+  text-decoration: none;
+  cursor: pointer;
+  transition:
+    background-color var(--duration-fast) var(--ease-standard),
+    border-color var(--duration-fast) var(--ease-standard),
+    color var(--duration-fast) var(--ease-standard);
+}
+
+.copyButton {
+  border: 1px solid transparent;
+  background: var(--color-accent-fill-gradient);
+  background-color: var(--color-accent-fill);
+  color: var(--color-accent-on-fill);
+}
+
+.copyButton:hover {
+  background: var(--color-accent-fill-hover);
+}
+
+.copyButtonCopied {
+  background: var(--color-success-bg);
+  background-color: var(--color-success-bg);
+  color: var(--color-success-ink);
+  border-color: var(--color-success-dot);
+}
+
+.copyButtonCopied:hover {
+  background: var(--color-success-bg);
+}
+
+.mailtoLink {
+  font-family: var(--font-mono);
+  font-size: var(--text-mono);
+  font-weight: 500;
+  background-color: var(--color-secondary-bg);
+  color: var(--color-secondary-ink);
+  border: 1px solid var(--color-border-subtle);
+}
+
+.mailtoLink:hover {
+  background-color: var(--color-secondary-bg-hover);
+  border-color: var(--color-border-strong);
+}
+
+.liveRegion {
+  min-height: 1.5em;
+  font-size: var(--text-mono-sm);
+  line-height: 1.5;
+  color: var(--color-ink-muted);
+}
+
+.liveRegionCopied {
+  color: var(--color-success-ink);
+  font-weight: 500;
+}
+
+.liveRegionFallback {
+  color: var(--color-warning-ink);
+}
+
+.channelList {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--space-3) var(--space-6);
+  list-style: none;
+  margin: 0;
+  padding: var(--space-4) 0 0;
+  border-top: 1px solid var(--color-border-subtle);
+}
+
+.channelItem {
+  display: inline-flex;
+  align-items: center;
+}
+
+.channelLink {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-1);
+  min-height: 44px;
+  font-size: var(--text-ui);
+  font-weight: 500;
+  color: var(--color-ink-primary);
+  text-decoration: none;
+  transition: color var(--duration-fast) var(--ease-standard);
+}
+
+.channelLink:hover {
+  color: var(--color-accent-text);
+  text-decoration: underline;
+  text-underline-offset: 4px;
+}
+
+.channelPlaceholder {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-2);
+  min-height: 44px;
+  font-size: var(--text-ui);
+  color: var(--color-ink-muted);
+}
+
+.channelLabel {
+  font-weight: 500;
+  color: var(--color-ink-primary);
+}
+
+.channelMarker {
+  font-family: var(--font-mono);
+  font-size: var(--text-mono-sm);
+  color: var(--color-ink-muted);
+}
+
+.location {
+  display: inline-flex;
+  align-items: center;
+  min-height: 44px;
+  font-family: var(--font-mono);
+  font-size: var(--text-mono-sm);
+  font-variant-numeric: tabular-nums;
+  color: var(--color-ink-muted);
+}
+
+.cvLink {
+  background-color: var(--color-secondary-bg);
+  color: var(--color-secondary-ink);
+  border: 1px solid var(--color-border-subtle);
+}
+
+.cvLink:hover {
+  background-color: var(--color-secondary-bg-hover);
+  border-color: var(--color-border-strong);
+}
+
+@media (max-width: 768px) {
+  .grid {
+    grid-template-columns: minmax(0, 1fr);
+    gap: var(--space-6);
+  }
+
+  .primaryActions {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .copyButton,
+  .mailtoLink {
+    width: 100%;
+  }
+}

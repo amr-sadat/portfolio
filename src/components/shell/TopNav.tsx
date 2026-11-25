@@ -1,74 +1,27 @@
-import { useEffect, useRef, useState } from 'react';
+import { lazy, Suspense, useRef, useState } from 'react';
 import { Link, useLocation } from 'react-router';
-import { MobileMenuSheet } from './MobileMenuSheet';
+import { useScrollSpy } from '../../hooks/useScrollSpy';
 import { NAV_SECTIONS, type NavSectionItem } from './navItems';
-import { ThemeToggle } from './ThemeToggle';
 import styles from './TopNav.module.css';
 
+const MobileMenuSheet = lazy(() =>
+  import('./MobileMenuSheet').then((m) => ({ default: m.MobileMenuSheet })),
+);
+
 const CASE_STUDY_PATHS = new Set(['/experience/siliconexpert', '/experience/idemia']);
+const NAV_SECTION_IDS: readonly NavSectionItem['id'][] = NAV_SECTIONS.map((s) => s.id);
 
 export function TopNav() {
   const { pathname } = useLocation();
   const isHome = pathname === '/';
   const isCaseStudy = CASE_STUDY_PATHS.has(pathname);
 
-  const [activeSection, setActiveSection] = useState<NavSectionItem['id'] | null>(null);
+  const { activeId: activeSection } = useScrollSpy<NavSectionItem['id']>({
+    ids: NAV_SECTION_IDS,
+    enabled: isHome,
+  });
   const [menuOpen, setMenuOpen] = useState(false);
   const menuButtonRef = useRef<HTMLButtonElement>(null);
-
-  useEffect(() => {
-    if (!isHome || typeof IntersectionObserver === 'undefined') {
-      return;
-    }
-
-    const elements = NAV_SECTIONS.map((s) => document.getElementById(s.id)).filter(
-      (el): el is HTMLElement => el !== null,
-    );
-
-    if (elements.length === 0) {
-      return;
-    }
-
-    const visibleRatios = new Map<string, number>();
-
-    const observer = new IntersectionObserver(
-      (entries) => {
-        for (const entry of entries) {
-          if (entry.isIntersecting) {
-            visibleRatios.set(entry.target.id, entry.intersectionRatio);
-          } else {
-            visibleRatios.delete(entry.target.id);
-          }
-        }
-
-        let topId: NavSectionItem['id'] | null = null;
-        let maxRatio = -1;
-        for (const section of NAV_SECTIONS) {
-          const ratio = visibleRatios.get(section.id);
-          if (ratio !== undefined && ratio > maxRatio) {
-            maxRatio = ratio;
-            topId = section.id;
-          }
-        }
-
-        if (topId !== null) {
-          setActiveSection(topId);
-        }
-      },
-      {
-        rootMargin: '-20% 0px -55% 0px',
-        threshold: [0, 0.25, 0.5, 0.75, 1],
-      },
-    );
-
-    for (const el of elements) {
-      observer.observe(el);
-    }
-
-    return () => {
-      observer.disconnect();
-    };
-  }, [isHome]);
 
   const handleCloseMenu = () => {
     setMenuOpen(false);
@@ -113,7 +66,6 @@ export function TopNav() {
           </nav>
 
           <div className={styles.actions}>
-            <ThemeToggle />
             <button
               ref={menuButtonRef}
               type="button"
@@ -128,13 +80,17 @@ export function TopNav() {
         </div>
       </header>
 
-      <MobileMenuSheet
-        isOpen={menuOpen}
-        onClose={handleCloseMenu}
-        isHome={isHome}
-        isCaseStudy={isCaseStudy}
-        activeSection={activeSection}
-      />
+      {menuOpen && (
+        <Suspense fallback={null}>
+          <MobileMenuSheet
+            isOpen={menuOpen}
+            onClose={handleCloseMenu}
+            isHome={isHome}
+            isCaseStudy={isCaseStudy}
+            activeSection={activeSection}
+          />
+        </Suspense>
+      )}
     </>
   );
 }
