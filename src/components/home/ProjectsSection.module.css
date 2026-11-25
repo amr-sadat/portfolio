@@ -30,9 +30,10 @@
   width: 100%;
   padding: var(--space-6);
   border-radius: var(--radius-card);
-  background-color: var(--color-surface-elevated);
+  background: linear-gradient(180deg, var(--color-stage-start) 0%, var(--color-stage-end) 100%);
   border: 1px solid var(--color-border-subtle);
-  box-shadow: var(--shadow-card);
+  box-shadow: var(--surface-specular-highlight);
+  backdrop-filter: blur(12px);
   text-decoration: none;
   color: inherit;
   transition:
@@ -43,12 +44,6 @@
 .card:hover {
   border-color: var(--color-border-strong);
   transform: translateY(-2px);
-}
-
-:global([data-theme='obsidian']) .card {
-  background: linear-gradient(180deg, var(--color-stage-start) 0%, var(--color-stage-end) 100%);
-  box-shadow: var(--surface-specular-highlight);
-  backdrop-filter: blur(12px);
 }
 
 .cardTop {

@@ -1,7 +1,6 @@
 import { render, screen, within } from '@testing-library/react';
 import { createMemoryRouter, RouterProvider } from 'react-router';
 import { describe, expect, it } from 'vitest';
-import { ThemeProvider } from '../../theme/ThemeProvider';
 import { AppShell } from './AppShell';
 
 function renderShell(initialPath = '/') {
@@ -24,11 +23,7 @@ function renderShell(initialPath = '/') {
     { initialEntries: [initialPath] },
   );
 
-  return render(
-    <ThemeProvider>
-      <RouterProvider router={router} />
-    </ThemeProvider>,
-  );
+  return render(<RouterProvider router={router} />);
 }
 
 describe('AppShell and FooterColophon', () => {

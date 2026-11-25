@@ -1,16 +1,13 @@
 import { fireEvent, render, screen, within } from '@testing-library/react';
 import { MemoryRouter } from 'react-router';
 import { describe, expect, it } from 'vitest';
-import { ThemeProvider } from '../theme/ThemeProvider';
 import { AppRoutes } from './routes';
 
 function renderRoute(initialPath: string) {
   return render(
-    <ThemeProvider>
-      <MemoryRouter initialEntries={[initialPath]}>
-        <AppRoutes />
-      </MemoryRouter>
-    </ThemeProvider>,
+    <MemoryRouter initialEntries={[initialPath]}>
+      <AppRoutes />
+    </MemoryRouter>,
   );
 }
 

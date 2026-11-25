@@ -25,15 +25,10 @@ const SECTION_STEPS = [
 ] as const;
 
 for (const study of CASE_STUDIES) {
-  test(`desktop (1280px) sticky ToC scroll-spy and dual-theme axe on ${study.path}`, async ({
-    page,
-  }) => {
+  test(`desktop (1280px) sticky ToC scroll-spy and axe on ${study.path}`, async ({ page }) => {
     await page.setViewportSize({ width: 1280, height: 800 });
     await page.goto(study.path);
-    await page.evaluate(() => window.localStorage.clear());
-    await page.reload();
 
-    await expect(page.locator('html')).toHaveAttribute('data-theme', 'daylight');
     await expect(page.getByRole('heading', { level: 1, name: study.heading })).toBeVisible();
 
     const hasOverflow = await page.evaluate(
@@ -94,25 +89,15 @@ for (const study of CASE_STUDIES) {
     const siblingLink = page.getByRole('link', { name: study.siblingName });
     await expect(siblingLink).toHaveAttribute('href', study.siblingPath);
 
-    // Dual-theme axe clean
-    const daylightAxe = await new AxeBuilder({ page }).analyze();
-    expect(daylightAxe.violations).toEqual([]);
-
-    await page.getByRole('button', { name: /switch to obsidian/i }).click();
-    await expect(page.locator('html')).toHaveAttribute('data-theme', 'obsidian');
-    const obsidianAxe = await new AxeBuilder({ page }).analyze();
-    expect(obsidianAxe.violations).toEqual([]);
+    const axeResults = await new AxeBuilder({ page }).analyze();
+    expect(axeResults.violations).toEqual([]);
   });
 
-  test(`mobile (375px) "On this page" disclosure navigation and dual-theme axe on ${study.path}`, async ({
+  test(`mobile (375px) "On this page" disclosure navigation and axe on ${study.path}`, async ({
     page,
   }) => {
     await page.setViewportSize({ width: 375, height: 812 });
     await page.goto(study.path);
-    await page.evaluate(() => window.localStorage.clear());
-    await page.reload();
-
-    await expect(page.locator('html')).toHaveAttribute('data-theme', 'daylight');
 
     const hasOverflow = await page.evaluate(
       () => document.documentElement.scrollWidth > window.innerWidth,
@@ -163,13 +148,8 @@ for (const study of CASE_STUDIES) {
     );
     expect(hasOverflowAfterLens).toBe(false);
 
-    const daylightAxe = await new AxeBuilder({ page }).analyze();
-    expect(daylightAxe.violations).toEqual([]);
-
-    await page.getByRole('button', { name: /switch to obsidian/i }).click();
-    await expect(page.locator('html')).toHaveAttribute('data-theme', 'obsidian');
-    const obsidianAxe = await new AxeBuilder({ page }).analyze();
-    expect(obsidianAxe.violations).toEqual([]);
+    const axeResults = await new AxeBuilder({ page }).analyze();
+    expect(axeResults.violations).toEqual([]);
   });
 
   test(`prefers-reduced-motion disables packet animation while preserving callouts on ${study.path}`, async ({

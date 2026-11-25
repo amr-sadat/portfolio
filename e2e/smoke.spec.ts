@@ -10,7 +10,7 @@ const ROUTES = [
 ];
 
 for (const route of ROUTES) {
-  test(`renders ${route.path} cleanly in Daylight with zero axe violations and no external requests`, async ({
+  test(`renders ${route.path} cleanly in dark mode with zero axe violations and no external requests`, async ({
     page,
   }) => {
     const errors: string[] = [];
@@ -31,7 +31,10 @@ for (const route of ROUTES) {
 
     await page.goto(route.path);
 
-    await expect(page.locator('html')).toHaveAttribute('data-theme', 'daylight');
+    const colorScheme = await page.evaluate(
+      () => window.getComputedStyle(document.documentElement).colorScheme,
+    );
+    expect(colorScheme).toBe('dark');
     await expect(page.getByRole('banner')).toBeVisible();
     await expect(page.getByRole('main')).toBeVisible();
     await expect(page.getByRole('contentinfo')).toBeVisible();
@@ -44,29 +47,17 @@ for (const route of ROUTES) {
   });
 }
 
-test('switches to Obsidian, persists across reload, and passes axe across key routes', async ({
+test('stays in dark mode regardless of light OS preference and renders no theme toggle', async ({
   page,
 }) => {
-  await page.emulateMedia({ colorScheme: 'dark' });
+  await page.emulateMedia({ colorScheme: 'light' });
   await page.goto('/');
 
-  // First visit always lands in Daylight even with dark OS preference
-  await expect(page.locator('html')).toHaveAttribute('data-theme', 'daylight');
-
-  // Switch to Obsidian and confirm persistence across reload
-  await page.getByRole('button', { name: /switch to obsidian/i }).click();
-  await expect(page.locator('html')).toHaveAttribute('data-theme', 'obsidian');
-
-  await page.reload();
-  await expect(page.locator('html')).toHaveAttribute('data-theme', 'obsidian');
-
-  for (const path of ['/', '/experience/siliconexpert', '/404']) {
-    await page.goto(path);
-    await expect(page.locator('html')).toHaveAttribute('data-theme', 'obsidian');
-    await expect(page.getByRole('heading', { level: 1 })).toBeVisible();
-    const results = await new AxeBuilder({ page }).analyze();
-    expect(results.violations).toEqual([]);
-  }
+  const colorScheme = await page.evaluate(
+    () => window.getComputedStyle(document.documentElement).colorScheme,
+  );
+  expect(colorScheme).toBe('dark');
+  await expect(page.getByRole('button', { name: /switch to|theme/i })).toHaveCount(0);
 });
 
 test('mobile (375px) enforces >= 44px tap targets and focus-trapped menu sheet', async ({
@@ -75,19 +66,13 @@ test('mobile (375px) enforces >= 44px tap targets and focus-trapped menu sheet',
   await page.setViewportSize({ width: 375, height: 812 });
   await page.goto('/');
 
-  const toggleButton = page.getByRole('button', { name: /switch to obsidian/i });
   const menuButton = page.getByRole('button', { name: /^menu$/i });
 
-  await expect(toggleButton).toBeVisible();
   await expect(menuButton).toBeVisible();
   await expect(page.getByRole('navigation', { name: /primary navigation/i })).toBeHidden();
 
-  const toggleBox = await toggleButton.boundingBox();
   const menuBox = await menuButton.boundingBox();
-  expect(toggleBox).not.toBeNull();
   expect(menuBox).not.toBeNull();
-  expect(toggleBox!.width).toBeGreaterThanOrEqual(44);
-  expect(toggleBox!.height).toBeGreaterThanOrEqual(44);
   expect(menuBox!.width).toBeGreaterThanOrEqual(44);
   expect(menuBox!.height).toBeGreaterThanOrEqual(44);
 
@@ -108,7 +93,7 @@ test('mobile (375px) enforces >= 44px tap targets and focus-trapped menu sheet',
   await expect(dialog).toBeHidden();
 });
 
-test('home Hero and About pass layout and dual-theme axe checks at desktop (1280px) and mobile (375px)', async ({
+test('home Hero and About pass layout and axe checks at desktop (1280px) and mobile (375px)', async ({
   page,
 }) => {
   for (const viewport of [
@@ -117,10 +102,6 @@ test('home Hero and About pass layout and dual-theme axe checks at desktop (1280
   ]) {
     await page.setViewportSize(viewport);
     await page.goto('/');
-    await page.evaluate(() => window.localStorage.clear());
-    await page.reload();
-
-    await expect(page.locator('html')).toHaveAttribute('data-theme', 'daylight');
 
     const hasOverflow = await page.evaluate(
       () => document.documentElement.scrollWidth > window.innerWidth,
@@ -140,29 +121,16 @@ test('home Hero and About pass layout and dual-theme axe checks at desktop (1280
     await expect(aboutSection).toBeVisible();
     await expect(aboutSection.getByRole('heading', { level: 3 })).toHaveCount(3);
 
-    const daylightAxe = await new AxeBuilder({ page }).analyze();
-    expect(daylightAxe.violations).toEqual([]);
-
-    await page.getByRole('button', { name: /switch to obsidian/i }).click();
-    await expect(page.locator('html')).toHaveAttribute('data-theme', 'obsidian');
-
-    const obsidianOverflow = await page.evaluate(
-      () => document.documentElement.scrollWidth > window.innerWidth,
-    );
-    expect(obsidianOverflow).toBe(false);
-
-    const obsidianAxe = await new AxeBuilder({ page }).analyze();
-    expect(obsidianAxe.violations).toEqual([]);
+    const axeResults = await new AxeBuilder({ page }).analyze();
+    expect(axeResults.violations).toEqual([]);
   }
 });
 
-test('home scroll-spy highlights #about -> #experience -> #projects -> #contact left-to-right and passes dual-theme axe', async ({
+test('home scroll-spy highlights #about -> #experience -> #projects -> #contact left-to-right and passes axe', async ({
   page,
 }) => {
   await page.setViewportSize({ width: 1280, height: 800 });
   await page.goto('/');
-  await page.evaluate(() => window.localStorage.clear());
-  await page.reload();
 
   const nav = page.getByRole('navigation', { name: /primary navigation/i });
   const navOrder = [
@@ -205,12 +173,6 @@ test('home scroll-spy highlights #about -> #experience -> #projects -> #contact 
   expect(Math.abs(firstBox!.y - secondBox!.y)).toBeLessThan(8);
   expect(Math.abs(secondBox!.y - thirdBox!.y)).toBeLessThan(8);
 
-  // Dual-theme axe clean across complete home page
-  const daylightAxe = await new AxeBuilder({ page }).analyze();
-  expect(daylightAxe.violations).toEqual([]);
-
-  await page.getByRole('button', { name: /switch to obsidian/i }).click();
-  await expect(page.locator('html')).toHaveAttribute('data-theme', 'obsidian');
-  const obsidianAxe = await new AxeBuilder({ page }).analyze();
-  expect(obsidianAxe.violations).toEqual([]);
+  const axeResults = await new AxeBuilder({ page }).analyze();
+  expect(axeResults.violations).toEqual([]);
 });

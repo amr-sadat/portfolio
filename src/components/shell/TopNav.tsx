@@ -2,7 +2,6 @@ import { lazy, Suspense, useRef, useState } from 'react';
 import { Link, useLocation } from 'react-router';
 import { useScrollSpy } from '../../hooks/useScrollSpy';
 import { NAV_SECTIONS, type NavSectionItem } from './navItems';
-import { ThemeToggle } from './ThemeToggle';
 import styles from './TopNav.module.css';
 
 const MobileMenuSheet = lazy(() =>
@@ -67,7 +66,6 @@ export function TopNav() {
           </nav>
 
           <div className={styles.actions}>
-            <ThemeToggle />
             <button
               ref={menuButtonRef}
               type="button"

@@ -1,7 +1,6 @@
 import { act, fireEvent, render, screen, within } from '@testing-library/react';
 import { createMemoryRouter, RouterProvider } from 'react-router';
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
-import { ThemeProvider } from '../../theme/ThemeProvider';
 import { TopNav } from './TopNav';
 
 type IntersectionCallback = (entries: Partial<IntersectionObserverEntry>[]) => void;
@@ -56,17 +55,12 @@ function renderTopNav(initialPath = '/') {
     { initialEntries: [initialPath] },
   );
 
-  return render(
-    <ThemeProvider>
-      <RouterProvider router={router} />
-    </ThemeProvider>,
-  );
+  return render(<RouterProvider router={router} />);
 }
 
 describe('TopNav and MobileMenuSheet', () => {
   beforeEach(() => {
     localStorage.clear();
-    delete document.documentElement.dataset.theme;
     document.body.style.overflow = '';
     observerCallback = null;
     observedElements.clear();

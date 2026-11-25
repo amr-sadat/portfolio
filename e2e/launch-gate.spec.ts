@@ -11,31 +11,17 @@ const VIEWPORTS = [
 ] as const;
 
 for (const viewport of VIEWPORTS) {
-  test(`all 4 routes pass axe-core in Daylight and Obsidian at ${viewport.name} (${viewport.width}x${viewport.height})`, async ({
+  test(`all 4 routes pass axe-core in dark mode at ${viewport.name} (${viewport.width}x${viewport.height})`, async ({
     page,
   }) => {
     await page.setViewportSize({ width: viewport.width, height: viewport.height });
 
     for (const path of ALL_FOUR_ROUTES) {
       await page.goto(path);
-      await page.evaluate(() => window.localStorage.clear());
-      await page.reload();
 
-      await expect(page.locator('html')).toHaveAttribute('data-theme', 'daylight');
       await expect(page.getByRole('heading', { level: 1 })).toBeVisible();
-      const daylightAxe = await new AxeBuilder({ page }).analyze();
-      expect(
-        daylightAxe.violations,
-        `Daylight axe violations on ${path} (${viewport.name})`,
-      ).toEqual([]);
-
-      await page.getByRole('button', { name: /switch to obsidian/i }).click();
-      await expect(page.locator('html')).toHaveAttribute('data-theme', 'obsidian');
-      const obsidianAxe = await new AxeBuilder({ page }).analyze();
-      expect(
-        obsidianAxe.violations,
-        `Obsidian axe violations on ${path} (${viewport.name})`,
-      ).toEqual([]);
+      const axeResults = await new AxeBuilder({ page }).analyze();
+      expect(axeResults.violations, `Axe violations on ${path} (${viewport.name})`).toEqual([]);
     }
   });
 }
@@ -172,8 +158,6 @@ test('desktop keyboard tab flow covers skip-to-content, sticky nav, copy email, 
       }),
     ).toBeFocused();
   }
-  await page.keyboard.press('Tab');
-  await expect(page.getByRole('button', { name: /switch to obsidian/i })).toBeFocused();
 
   // 3. Copy email button operable via keyboard Enter
   const copyButton = page.getByRole('button', { name: /copy email/i });

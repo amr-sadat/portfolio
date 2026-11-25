@@ -48,11 +48,6 @@ export function verifyCsp({ html, headers }) {
     }
   }
 
-  if (inlineScripts.length === 0) {
-    errors.push('No inline <script> found in built HTML.');
-    return { ok: false, errors, hashes: [] };
-  }
-
   const hashes = inlineScripts.map(hashScript);
 
   const cspLine = headers
@@ -110,7 +105,8 @@ function runCli() {
     process.exit(1);
   }
 
-  console.log(`CSP verified (${result.hashes.join(', ')}).`);
+  const detail = result.hashes.length > 0 ? result.hashes.join(', ') : 'no inline scripts';
+  console.log(`CSP verified (${detail}).`);
 }
 
 if (process.argv[1] && fileURLToPath(import.meta.url) === resolve(process.argv[1])) {
