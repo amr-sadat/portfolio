@@ -106,3 +106,51 @@ test('mobile (375px) enforces >= 44px tap targets and focus-trapped menu sheet',
   await page.keyboard.press('Escape');
   await expect(dialog).toBeHidden();
 });
+
+test('home Hero and About pass layout and dual-theme axe checks at desktop (1280px) and mobile (375px)', async ({
+  page,
+}) => {
+  for (const viewport of [
+    { width: 1280, height: 800 },
+    { width: 375, height: 812 },
+  ]) {
+    await page.setViewportSize(viewport);
+    await page.goto('/');
+    await page.evaluate(() => window.localStorage.clear());
+    await page.reload();
+
+    await expect(page.locator('html')).toHaveAttribute('data-theme', 'daylight');
+
+    const hasOverflow = await page.evaluate(
+      () => document.documentElement.scrollWidth > window.innerWidth,
+    );
+    expect(hasOverflow).toBe(false);
+
+    const viewExperienceCta = page.getByRole('link', { name: 'View Experience' });
+    await expect(viewExperienceCta).toBeVisible();
+    await expect(viewExperienceCta).toHaveAttribute('href', '#experience');
+    const ctaBox = await viewExperienceCta.boundingBox();
+    expect(ctaBox).not.toBeNull();
+    expect(ctaBox!.height).toBeGreaterThanOrEqual(44);
+
+    await expect(page.getByRole('link', { name: 'Download CV' })).toHaveCount(0);
+
+    const aboutSection = page.locator('section#about');
+    await expect(aboutSection).toBeVisible();
+    await expect(aboutSection.getByRole('heading', { level: 3 })).toHaveCount(3);
+
+    const daylightAxe = await new AxeBuilder({ page }).analyze();
+    expect(daylightAxe.violations).toEqual([]);
+
+    await page.getByRole('button', { name: /switch to obsidian/i }).click();
+    await expect(page.locator('html')).toHaveAttribute('data-theme', 'obsidian');
+
+    const obsidianOverflow = await page.evaluate(
+      () => document.documentElement.scrollWidth > window.innerWidth,
+    );
+    expect(obsidianOverflow).toBe(false);
+
+    const obsidianAxe = await new AxeBuilder({ page }).analyze();
+    expect(obsidianAxe.violations).toEqual([]);
+  }
+});

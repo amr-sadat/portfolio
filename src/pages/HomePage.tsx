@@ -1,15 +1,21 @@
 import { Link } from 'react-router';
+import { AboutSection } from '../components/home/AboutSection';
+import { HeroSection } from '../components/home/HeroSection';
+import { homeContent, profile } from '../content';
+import styles from './HomePage.module.css';
 
 export function HomePage() {
   return (
     <main id="main-content">
-      <h1>Amr Sadat Abou Hegab</h1>
-      <section id="about" aria-labelledby="about-heading">
-        <h2 id="about-heading">About</h2>
-      </section>
-      <section id="experience" aria-labelledby="experience-heading">
+      <HeroSection hero={homeContent.hero} hasCvPdf={profile.hasCvPdf} />
+      <AboutSection about={homeContent.about} />
+      <section
+        id="experience"
+        className={styles.placeholderSection}
+        aria-labelledby="experience-heading"
+      >
         <h2 id="experience-heading">Experience</h2>
-        <ul>
+        <ul className={styles.caseStudyList}>
           <li>
             <Link to="/experience/siliconexpert">SiliconExpert — P5 Platform Case Study</Link>
           </li>
@@ -20,10 +26,14 @@ export function HomePage() {
           </li>
         </ul>
       </section>
-      <section id="projects" aria-labelledby="projects-heading">
+      <section
+        id="projects"
+        className={styles.placeholderSection}
+        aria-labelledby="projects-heading"
+      >
         <h2 id="projects-heading">Personal Projects</h2>
       </section>
-      <section id="contact" aria-labelledby="contact-heading">
+      <section id="contact" className={styles.placeholderSection} aria-labelledby="contact-heading">
         <h2 id="contact-heading">Contact</h2>
       </section>
     </main>

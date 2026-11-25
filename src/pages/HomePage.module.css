@@ -1,0 +1,14 @@
+.placeholderSection {
+  max-width: var(--container-max);
+  margin: 0 auto;
+  padding: var(--space-12) var(--space-5);
+  border-top: 1px solid var(--color-border-subtle);
+}
+
+.caseStudyList {
+  margin-top: var(--space-4);
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-3);
+}
