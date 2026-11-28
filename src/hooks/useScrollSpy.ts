@@ -28,6 +28,10 @@ export function useScrollSpy<TId extends string>({
 
     const visibleScores = new Map<string, number>();
 
+    const isScrolledToBottom = () =>
+      window.scrollY > 0 &&
+      window.scrollY + window.innerHeight >= document.documentElement.scrollHeight - 2;
+
     const observer = new IntersectionObserver(
       (entries) => {
         for (const entry of entries) {
@@ -39,6 +43,14 @@ export function useScrollSpy<TId extends string>({
             );
           } else {
             visibleScores.delete(entry.target.id);
+          }
+        }
+
+        if (isScrolledToBottom()) {
+          const lastId = ids[ids.length - 1];
+          if (lastId !== undefined) {
+            setActiveId(lastId);
+            return;
           }
         }
 
@@ -67,10 +79,7 @@ export function useScrollSpy<TId extends string>({
     }
 
     const handleScroll = () => {
-      const scrolledToBottom =
-        window.scrollY > 0 &&
-        window.scrollY + window.innerHeight >= document.documentElement.scrollHeight - 2;
-      if (scrolledToBottom) {
+      if (isScrolledToBottom()) {
         const lastId = ids[ids.length - 1];
         if (lastId !== undefined) {
           setActiveId(lastId);
