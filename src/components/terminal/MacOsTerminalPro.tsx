@@ -151,8 +151,11 @@ export function MacOsTerminalPro() {
   const { copyState, copyEmail } = useCopyEmail(profile.contact.email);
   const { entries, totalChars } = useMemo(() => {
     const steps = buildTerminalScript();
-    const list: { readonly step: TerminalStep; readonly offset: number; readonly length: number }[] =
-      [];
+    const list: {
+      readonly step: TerminalStep;
+      readonly offset: number;
+      readonly length: number;
+    }[] = [];
     let cursor = 0;
     for (const step of steps) {
       const length = getStepCharCount(step);
@@ -373,11 +376,7 @@ export function MacOsTerminalPro() {
               </div>
 
               <div className={styles.actionRow}>
-                <button
-                  type="button"
-                  className={styles.actionBtn}
-                  onClick={() => void copyEmail()}
-                >
+                <button type="button" className={styles.actionBtn} onClick={() => void copyEmail()}>
                   {copyState === 'copied' ? '✓ Email Copied' : `Copy ${profile.contact.email}`}
                 </button>
                 <a
