@@ -73,6 +73,17 @@ const ROUTE_SPECS: Record<string, RouteMetadataSpec> = {
     ogImageAlt: HOME_OG_IMAGE_ALT,
     includePersonJsonLd: true,
   },
+  '/terminal': {
+    path: '/terminal',
+    title: 'Amr Sadat Abou Hegab — macOS Terminal Pro Portfolio',
+    description:
+      'Interactive full-screen macOS Terminal Pro portfolio for Amr Sadat Abou Hegab — Senior Frontend Engineer (Angular 2–22, TypeScript, React, AI-Augmented Engineering).',
+    ogTitle: 'Amr Sadat Abou Hegab · Terminal Portfolio',
+    ogType: 'website',
+    ogImagePath: '/og/home.png',
+    ogImageAlt: HOME_OG_IMAGE_ALT,
+    includePersonJsonLd: true,
+  },
 };
 
 const NOT_FOUND_SPEC: RouteMetadataSpec = {
