@@ -32,6 +32,53 @@ export function useScrollSpy<TId extends string>({
       window.scrollY > 0 &&
       window.scrollY + window.innerHeight >= document.documentElement.scrollHeight - 2;
 
+    const pickActiveSection = () => {
+      if (isScrolledToBottom()) {
+        const lastId = ids[ids.length - 1];
+        if (lastId !== undefined) {
+          setActiveId(lastId);
+          return;
+        }
+      }
+
+      const bandTop = window.innerHeight * 0.2;
+      const bandBottom = window.innerHeight * 0.45;
+
+      let topId: TId | null = null;
+      let maxScore = 0;
+      let hasLayoutGeometry = false;
+
+      for (const el of elements) {
+        const rect = el.getBoundingClientRect();
+        if (rect.height > 0) {
+          hasLayoutGeometry = true;
+          const overlap = Math.max(
+            0,
+            Math.min(rect.bottom, bandBottom) - Math.max(rect.top, bandTop),
+          );
+          if (overlap > maxScore) {
+            maxScore = overlap;
+            topId = el.id as TId;
+          }
+        }
+      }
+
+      if (!hasLayoutGeometry) {
+        let fallbackMax = -1;
+        for (const id of ids) {
+          const score = visibleScores.get(id);
+          if (score !== undefined && score > fallbackMax) {
+            fallbackMax = score;
+            topId = id;
+          }
+        }
+      }
+
+      if (topId !== null) {
+        setActiveId(topId);
+      }
+    };
+
     const observer = new IntersectionObserver(
       (entries) => {
         for (const entry of entries) {
@@ -46,27 +93,7 @@ export function useScrollSpy<TId extends string>({
           }
         }
 
-        if (isScrolledToBottom()) {
-          const lastId = ids[ids.length - 1];
-          if (lastId !== undefined) {
-            setActiveId(lastId);
-            return;
-          }
-        }
-
-        let topId: TId | null = null;
-        let maxScore = -1;
-        for (const id of ids) {
-          const score = visibleScores.get(id);
-          if (score !== undefined && score > maxScore) {
-            maxScore = score;
-            topId = id;
-          }
-        }
-
-        if (topId !== null) {
-          setActiveId(topId);
-        }
+        pickActiveSection();
       },
       {
         rootMargin: '-20% 0px -55% 0px',
@@ -79,12 +106,7 @@ export function useScrollSpy<TId extends string>({
     }
 
     const handleScroll = () => {
-      if (isScrolledToBottom()) {
-        const lastId = ids[ids.length - 1];
-        if (lastId !== undefined) {
-          setActiveId(lastId);
-        }
-      }
+      pickActiveSection();
     };
 
     window.addEventListener('scroll', handleScroll, { passive: true });

@@ -1,7 +1,7 @@
 export { experienceContent } from './experience';
 export type { ExperienceContent, ExperienceRoleCard } from './experience';
 export { homeContent } from './home';
-export type { AboutBeat, AboutContent, CtaLink, HeroContent, HomeContent } from './home';
+export type { CtaLink, HeroContent, HomeContent } from './home';
 export { projectsContent } from './projects';
 export type { PersonalProject, ProjectsContent } from './projects';
 export { createProfile, profile, UNVERIFIED_CV_MARKER } from './profile';

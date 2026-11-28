@@ -6,12 +6,11 @@
 }
 
 .title {
-  font-size: clamp(2rem, 4.2vw, 3.25rem);
-  line-height: 1.08;
-  letter-spacing: -0.025em;
+  font-size: var(--text-h2);
+  line-height: 1.2;
+  letter-spacing: var(--tracking-h2);
   font-weight: 600;
   color: var(--color-ink-primary);
-  max-width: 22ch;
   text-wrap: balance;
 }
 

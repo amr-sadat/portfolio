@@ -33,9 +33,11 @@ describe('typed content contract', () => {
     expect(withoutCv.hasCvPdf).toBe(false);
   });
 
-  it('provides Hero copy and two About architectural beats', () => {
+  it('provides Hero copy with architecture and AI-Augmented Engineering summary', () => {
     expect(homeContent.hero.name).toBe('Amr Sadat Abou Hegab');
     expect(homeContent.hero.role).toBe('Senior Frontend Engineer');
+    expect(homeContent.hero.thesis).toMatch(/Clean Architecture/i);
+    expect(homeContent.hero.thesis).toMatch(/Claude Code/i);
     expect(homeContent.hero.primaryCta).toEqual({
       label: 'View Experience',
       href: '#experience',
@@ -44,7 +46,5 @@ describe('typed content contract', () => {
       label: 'Download CV',
       href: '/cv.pdf',
     });
-    expect(homeContent.about.heading).toBe('About');
-    expect(homeContent.about.beats).toHaveLength(2);
   });
 });

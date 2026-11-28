@@ -115,16 +115,12 @@ test('home Hero and About pass layout and axe checks at desktop (1280px) and mob
 
     await expect(page.getByRole('link', { name: 'Download CV' })).toHaveCount(0);
 
-    const aboutSection = page.locator('section#about');
-    await expect(aboutSection).toBeVisible();
-    await expect(aboutSection.getByRole('heading', { level: 3 })).toHaveCount(2);
-
     const axeResults = await new AxeBuilder({ page }).analyze();
     expect(axeResults.violations).toEqual([]);
   }
 });
 
-test('home scroll-spy highlights #about -> #experience -> #projects -> #contact left-to-right and passes axe', async ({
+test('home scroll-spy highlights #experience -> #projects -> #contact left-to-right and passes axe', async ({
   page,
 }) => {
   await page.setViewportSize({ width: 1280, height: 800 });
@@ -132,7 +128,6 @@ test('home scroll-spy highlights #about -> #experience -> #projects -> #contact 
 
   const nav = page.getByRole('navigation', { name: /primary navigation/i });
   const navOrder = [
-    { id: 'about', label: 'About' },
     { id: 'experience', label: 'Experience' },
     { id: 'projects', label: 'Projects' },
     { id: 'contact', label: 'Contact' },

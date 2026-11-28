@@ -120,7 +120,7 @@ test('desktop keyboard tab flow covers skip-to-content, sticky nav, and copy ema
   // 2. Sticky nav links are reachable in order via Tab
   await skipLink.focus();
   await expect(skipLink).toBeFocused();
-  for (const label of ['About', 'Experience', 'Projects', 'Contact']) {
+  for (const label of ['Experience', 'Projects', 'Contact']) {
     await page.keyboard.press('Tab');
     await expect(
       page.getByRole('navigation', { name: /primary navigation/i }).getByRole('link', {

@@ -38,7 +38,7 @@ const SWATCH_COLORS = ['#ff453a', '#ff9f0a', '#ffd60a', '#30d158', '#64d2ff', '#
 const NEOFETCH_META_ENTRIES = [
   { key: 'Name', value: profile.fullName },
   { key: 'Role', value: `${profile.role} (7+ Years)` },
-  { key: 'Core', value: 'Angular (2–22) · TypeScript · NgRx Signal Store · RxJS · React' },
+  { key: 'Core', value: 'Angular (2–22) · TypeScript · NgRx Signal Store · RxJS' },
   { key: 'AI', value: 'Claude Code · Devin AI (Windsurf) · OpenCode' },
   { key: 'Host', value: `${profile.location} · ${profile.contact.email}` },
 ] as const;

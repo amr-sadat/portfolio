@@ -66,7 +66,7 @@ const ROUTE_SPECS: Record<string, RouteMetadataSpec> = {
     path: '/',
     title: 'Amr Sadat Abou Hegab — Senior Frontend Engineer',
     description:
-      'Senior Frontend Engineer with 7+ years architecting national-scale and enterprise frontend systems at IDEMIA Egypt and SiliconExpert. Angular (2–22), React, TypeScript, and AI-Augmented Engineering.',
+      'Senior Frontend Engineer with 7+ years architecting national-scale and enterprise frontend systems at IDEMIA Egypt and SiliconExpert. Angular (2–22), TypeScript, and AI-Augmented Engineering.',
     ogTitle: 'Amr Sadat Abou Hegab · Senior Frontend Engineer',
     ogType: 'website',
     ogImagePath: '/og/home.png',
@@ -77,7 +77,7 @@ const ROUTE_SPECS: Record<string, RouteMetadataSpec> = {
     path: '/terminal',
     title: 'Amr Sadat Abou Hegab — macOS Terminal Pro Portfolio',
     description:
-      'Interactive full-screen macOS Terminal Pro portfolio for Amr Sadat Abou Hegab — Senior Frontend Engineer (Angular 2–22, TypeScript, React, AI-Augmented Engineering).',
+      'Interactive full-screen macOS Terminal Pro portfolio for Amr Sadat Abou Hegab — Senior Frontend Engineer (Angular 2–22, TypeScript, AI-Augmented Engineering).',
     ogTitle: 'Amr Sadat Abou Hegab · Terminal Portfolio',
     ogType: 'website',
     ogImagePath: '/og/home.png',
