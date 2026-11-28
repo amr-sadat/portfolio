@@ -18,7 +18,7 @@ describe('HomePage', () => {
     const sectionIds = Array.from(container.querySelectorAll('main > section[id]')).map(
       (el) => el.id,
     );
-    expect(sectionIds).toEqual(['about', 'experience', 'projects', 'contact']);
+    expect(sectionIds).toEqual(['experience', 'projects', 'contact']);
 
     expect(
       screen.getByRole('heading', { level: 1, name: 'Amr Sadat Abou Hegab' }),

@@ -20,7 +20,7 @@ describe('HeroSection', () => {
     expect(screen.getByText(/IDEMIA/i)).toBeInTheDocument();
     expect(screen.getByText(/SiliconExpert/i)).toBeInTheDocument();
     expect(
-      screen.getByText('7+ years · TypeScript, Angular (2–22), React · AI-Augmented Engineering'),
+      screen.getByText('7+ years · TypeScript, Angular (2–22) · AI-Augmented Engineering'),
     ).toBeInTheDocument();
     expect(
       screen.getByText('Open to select Senior & Staff Frontend roles · Egypt or Remote (UTC+2)'),

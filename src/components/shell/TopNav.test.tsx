@@ -32,7 +32,6 @@ function renderTopNav(initialPath = '/') {
           <>
             <TopNav />
             <main id="main-content">
-              <section id="about">About</section>
               <section id="experience">Experience</section>
               <section id="projects">Projects</section>
               <section id="contact">Contact</section>
@@ -80,9 +79,8 @@ describe('TopNav and MobileMenuSheet', () => {
 
     const nav = within(header).getByRole('navigation', { name: /primary/i });
     const links = within(nav).getAllByRole('link');
-    expect(links.map((l) => l.textContent)).toEqual(['About', 'Experience', 'Projects', 'Contact']);
+    expect(links.map((l) => l.textContent)).toEqual(['Experience', 'Projects', 'Contact']);
     expect(links.map((l) => l.getAttribute('href'))).toEqual([
-      '#about',
       '#experience',
       '#projects',
       '#contact',
@@ -111,7 +109,7 @@ describe('TopNav and MobileMenuSheet', () => {
       'aria-current',
       'location',
     );
-    expect(within(nav).getByRole('link', { name: 'About' })).not.toHaveAttribute('aria-current');
+    expect(within(nav).getByRole('link', { name: 'Projects' })).not.toHaveAttribute('aria-current');
   });
 
   it('links section items back to /#section from non-home routes without a case study back link', () => {
@@ -144,7 +142,7 @@ describe('TopNav and MobileMenuSheet', () => {
     const focusables = dialog.querySelectorAll<HTMLElement>(
       'a[href], button:not([disabled]), [tabindex]:not([tabindex="-1"])',
     );
-    expect(focusables.length).toBeGreaterThanOrEqual(5);
+    expect(focusables.length).toBeGreaterThanOrEqual(4);
     const first = focusables[0]!;
     const last = focusables[focusables.length - 1]!;
 
