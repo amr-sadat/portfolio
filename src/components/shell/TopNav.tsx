@@ -8,13 +8,11 @@ const MobileMenuSheet = lazy(() =>
   import('./MobileMenuSheet').then((m) => ({ default: m.MobileMenuSheet })),
 );
 
-const CASE_STUDY_PATHS = new Set(['/experience/siliconexpert', '/experience/idemia']);
 const NAV_SECTION_IDS: readonly NavSectionItem['id'][] = NAV_SECTIONS.map((s) => s.id);
 
 export function TopNav() {
   const { pathname } = useLocation();
   const isHome = pathname === '/';
-  const isCaseStudy = CASE_STUDY_PATHS.has(pathname);
 
   const { activeId: activeSection } = useScrollSpy<NavSectionItem['id']>({
     ids: NAV_SECTION_IDS,
@@ -32,13 +30,7 @@ export function TopNav() {
     <>
       <header className={styles.header}>
         <div className={styles.inner}>
-          <div className={styles.leftSlot}>
-            {isCaseStudy && (
-              <Link to="/#experience" className={styles.backLink}>
-                ← Experience
-              </Link>
-            )}
-          </div>
+          <div className={styles.leftSlot} />
 
           <nav aria-label="Primary navigation" className={styles.desktopNav}>
             <ul className={styles.navList}>
@@ -86,7 +78,6 @@ export function TopNav() {
             isOpen={menuOpen}
             onClose={handleCloseMenu}
             isHome={isHome}
-            isCaseStudy={isCaseStudy}
             activeSection={activeSection}
           />
         </Suspense>

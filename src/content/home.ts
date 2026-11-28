@@ -23,7 +23,7 @@ export interface AboutBeat {
 
 export interface AboutContent {
   readonly heading: string;
-  readonly beats: readonly [AboutBeat, AboutBeat, AboutBeat];
+  readonly beats: readonly AboutBeat[];
 }
 
 export interface HomeContent {
@@ -53,18 +53,13 @@ export const homeContent: HomeContent = {
     beats: [
       {
         id: 'enterprise-systems',
-        title: 'National-scale & enterprise frontend systems',
-        body: 'Over the past 7+ years, I have focused on high-stakes frontend architecture where correctness, latency, and long-term maintainability matter—spanning national border control, e-Visa, and immigration platforms at IDEMIA Egypt and the global electronics supply-chain P5 platform at SiliconExpert. My day-to-day work centers on Clean Architecture boundaries, deterministic reactive state with Signals, NgRx Signal Store, and RxJS, server-side rendering, and high-density render performance.',
+        title: 'Enterprise Frontend Systems',
+        body: '7+ years architecting high-stakes web platforms at IDEMIA Egypt and SiliconExpert—focused on Clean Architecture, deterministic reactive state (Signals and RxJS), and render performance.',
       },
       {
         id: 'ai-augmented-engineering',
-        title: 'Staff-level leverage & AI-Augmented Engineering',
-        body: 'I practice AI-Augmented Engineering: human-owned system design, domain modeling, explicit specifications, code review rigor, and automated verification directing agentic execution tools including Claude Code, Devin AI, and OpenCode. Keeping architecture and acceptance criteria firmly human-owned lets teams move faster without trading away clarity or reliability.',
-      },
-      {
-        id: 'framework-agnostic-craft',
-        title: 'Framework-agnostic frontend craft',
-        body: 'My deepest production track record is 7+ years of enterprise Angular (versions 2 through 22), and the underlying systems discipline—state modeling, rendering pipelines, accessibility, and strict TypeScript contracts—transfers directly across ecosystems. I built this portfolio from scratch in React and TypeScript as transparent, inspectable proof of that framework-agnostic craft.',
+        title: 'AI-Augmented Engineering',
+        body: 'Human-owned system design, specs, and code review directing agentic tools like Claude Code, Devin AI, and OpenCode for faster, verifiable delivery.',
       },
     ],
   },

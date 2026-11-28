@@ -33,27 +33,6 @@ describe('SEO route metadata', () => {
     expect(meta.includePersonJsonLd).toBe(true);
   });
 
-  it('produces complete Case Study metadata for SiliconExpert and IDEMIA routes', () => {
-    const se = getRouteMetadata('/experience/siliconexpert', TEST_SITE_URL);
-    expect(se.title).toMatch(/SiliconExpert \(P5 Platform\)/);
-    expect(se.canonical).toBe('https://amrsadat.dev/experience/siliconexpert');
-    expect(se.ogType).toBe('article');
-    expect(se.ogUrl).toBe('https://amrsadat.dev/experience/siliconexpert');
-    expect(se.ogImage).toBe('https://amrsadat.dev/og/siliconexpert.png');
-    expect(se.twitterCard).toBe('summary_large_image');
-    expect(se.robots).toBeUndefined();
-    expect(se.includePersonJsonLd).toBe(false);
-
-    const idemia = getRouteMetadata('/experience/idemia/', TEST_SITE_URL);
-    expect(idemia.title).toMatch(/IDEMIA Egypt/);
-    expect(idemia.canonical).toBe('https://amrsadat.dev/experience/idemia');
-    expect(idemia.ogType).toBe('article');
-    expect(idemia.ogUrl).toBe('https://amrsadat.dev/experience/idemia');
-    expect(idemia.ogImage).toBe('https://amrsadat.dev/og/idemia.png');
-    expect(idemia.robots).toBeUndefined();
-    expect(idemia.includePersonJsonLd).toBe(false);
-  });
-
   it('marks /404 and unknown routes as noindex', () => {
     const explicit404 = getRouteMetadata('/404', TEST_SITE_URL);
     expect(explicit404.robots).toBe('noindex, nofollow');
@@ -132,21 +111,12 @@ describe('syncDocumentMetadata', () => {
       name: 'Amr Sadat Abou Hegab',
     });
 
-    syncDocumentMetadata('/experience/siliconexpert', TEST_SITE_URL);
-    expect(document.title).toMatch(/SiliconExpert \(P5 Platform\)/);
-    expect(document.querySelectorAll('link[rel="canonical"]')).toHaveLength(1);
-    expect(document.querySelector('link[rel="canonical"]')?.getAttribute('href')).toBe(
-      'https://amrsadat.dev/experience/siliconexpert',
-    );
-    expect(document.querySelector('meta[property="og:image"]')?.getAttribute('content')).toBe(
-      'https://amrsadat.dev/og/siliconexpert.png',
-    );
-    expect(document.querySelector('script#person-jsonld')).toBeNull();
-
     syncDocumentMetadata('/404', TEST_SITE_URL);
+    expect(document.querySelectorAll('link[rel="canonical"]')).toHaveLength(1);
     expect(document.querySelector('meta[name="robots"]')?.getAttribute('content')).toBe(
       'noindex, nofollow',
     );
+    expect(document.querySelector('script#person-jsonld')).toBeNull();
 
     syncDocumentMetadata('/', TEST_SITE_URL);
     expect(document.querySelector('meta[name="robots"]')).toBeNull();

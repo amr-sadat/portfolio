@@ -73,27 +73,16 @@ const ROUTE_SPECS: Record<string, RouteMetadataSpec> = {
     ogImageAlt: HOME_OG_IMAGE_ALT,
     includePersonJsonLd: true,
   },
-  '/experience/siliconexpert': {
-    path: '/experience/siliconexpert',
-    title: 'SiliconExpert (P5 Platform) · Architectural Case Study — Amr Sadat Abou Hegab',
+  '/terminal': {
+    path: '/terminal',
+    title: 'Amr Sadat Abou Hegab — macOS Terminal Pro Portfolio',
     description:
-      'NDA-safe architectural Case Study of SiliconExpert’s P5 electronics supply-chain platform: deterministic Signals state, Clean Architecture boundaries, and sustained render performance.',
-    ogTitle: 'SiliconExpert (P5 Platform) · Architectural Case Study',
-    ogType: 'article',
-    ogImagePath: '/og/siliconexpert.png',
-    ogImageAlt: 'SiliconExpert (P5 Platform) Architectural Case Study preview',
-    includePersonJsonLd: false,
-  },
-  '/experience/idemia': {
-    path: '/experience/idemia',
-    title: 'IDEMIA Egypt · Architectural Case Study — Amr Sadat Abou Hegab',
-    description:
-      'NDA-safe architectural Case Study of IDEMIA Egypt’s national border control, e-Visa, and immigration web systems: deterministic workflows, strict boundaries, and zero-ambiguity UX.',
-    ogTitle: 'IDEMIA Egypt · Architectural Case Study',
-    ogType: 'article',
-    ogImagePath: '/og/idemia.png',
-    ogImageAlt: 'IDEMIA Egypt Architectural Case Study preview',
-    includePersonJsonLd: false,
+      'Interactive full-screen macOS Terminal Pro portfolio for Amr Sadat Abou Hegab — Senior Frontend Engineer (Angular 2–22, TypeScript, React, AI-Augmented Engineering).',
+    ogTitle: 'Amr Sadat Abou Hegab · Terminal Portfolio',
+    ogType: 'website',
+    ogImagePath: '/og/home.png',
+    ogImageAlt: HOME_OG_IMAGE_ALT,
+    includePersonJsonLd: true,
   },
 };
 

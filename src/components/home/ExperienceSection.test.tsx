@@ -1,98 +1,59 @@
 import { render, screen, within } from '@testing-library/react';
-import { MemoryRouter } from 'react-router';
 import { describe, expect, it } from 'vitest';
 import { experienceContent } from '../../content';
 import { ExperienceSection } from './ExperienceSection';
 
 function renderExperience() {
-  return render(
-    <MemoryRouter>
-      <ExperienceSection experience={experienceContent} />
-    </MemoryRouter>,
-  );
+  return render(<ExperienceSection experience={experienceContent} />);
 }
 
 describe('ExperienceSection', () => {
-  it('renders #experience landmark with reverse-chronological flagships (SiliconExpert before IDEMIA Egypt)', () => {
+  it('renders #experience landmark with 4 reverse-chronological role cards', () => {
     const { container } = renderExperience();
 
     const section = container.querySelector('section#experience');
     expect(section).not.toBeNull();
     expect(screen.getByRole('heading', { level: 2, name: 'Experience' })).toBeInTheDocument();
 
-    const flagshipArticles = screen.getAllByRole('article');
-    expect(flagshipArticles).toHaveLength(2);
-    const [first, second] = flagshipArticles;
-    if (!first || !second) {
-      throw new Error('Expected two flagship articles');
-    }
+    const roleCards = screen.getAllByRole('article');
+    expect(roleCards).toHaveLength(4);
 
-    const firstHeading = within(first).getByRole('heading', { level: 3 });
-    const secondHeading = within(second).getByRole('heading', { level: 3 });
-
-    expect(firstHeading).toHaveTextContent(/SiliconExpert/i);
-    expect(firstHeading).toHaveTextContent(/P5 Platform/i);
-    expect(secondHeading).toHaveTextContent(/IDEMIA Egypt/i);
-    expect(secondHeading).toHaveTextContent(/Border Control, e-Visa & Immigration System/i);
+    const headings = roleCards.map((card) => within(card).getByRole('heading', { level: 3 }));
+    expect(headings.map((h) => h.textContent)).toEqual([
+      'Senior Front End Developer II',
+      'Senior Front End Developer I',
+      'Senior Software Engineer',
+      'Junior Front End Developer',
+    ]);
   });
 
-  it('renders text-only teasers with verified role, tenure, 3 stack tags, and Read case study links', () => {
+  it('renders company, tenure, highlights, and stack tags on every role card without case study links', () => {
     const { container } = renderExperience();
 
-    const flagshipArticles = screen.getAllByRole('article');
-    const [siliconExpert, idemia] = flagshipArticles;
-    if (!siliconExpert || !idemia) {
-      throw new Error('Expected two flagship articles');
+    const roleCards = screen.getAllByRole('article');
+    expect(roleCards).toHaveLength(4);
+
+    expect(within(roleCards[0]!).getByText('SiliconExpert')).toBeInTheDocument();
+    expect(within(roleCards[0]!).getByText('Apr 2025 – Present')).toBeInTheDocument();
+
+    expect(within(roleCards[1]!).getByText('SiliconExpert')).toBeInTheDocument();
+    expect(within(roleCards[1]!).getByText('Jun 2022 – Mar 2025')).toBeInTheDocument();
+
+    expect(within(roleCards[2]!).getByText('IDEMIA Egypt')).toBeInTheDocument();
+    expect(within(roleCards[2]!).getByText('May 2021 – May 2022')).toBeInTheDocument();
+
+    expect(within(roleCards[3]!).getByText('IDEMIA Egypt')).toBeInTheDocument();
+    expect(within(roleCards[3]!).getByText('Jul 2018 – Apr 2021')).toBeInTheDocument();
+
+    for (const card of roleCards) {
+      expect(within(card).queryByRole('link')).toBeNull();
+      const lists = within(card).getAllByRole('list');
+      expect(lists).toHaveLength(2);
+      expect(within(lists[0]!).getAllByRole('listitem')).toHaveLength(3);
+      expect(within(lists[1]!).getAllByRole('listitem').length).toBeGreaterThanOrEqual(3);
     }
 
-    expect(within(siliconExpert).getByText('Senior Front End Developer II')).toBeInTheDocument();
-    expect(within(siliconExpert).getByText('Jun 2022 – Present')).toBeInTheDocument();
-    const siliconExpertLink = within(siliconExpert).getByRole('link', {
-      name: /Read case study/i,
-    });
-    expect(siliconExpertLink).toHaveAttribute('href', '/experience/siliconexpert');
-
-    expect(within(idemia).getByText('Senior Software Engineer')).toBeInTheDocument();
-    expect(within(idemia).getByText('Jul 2018 – May 2022')).toBeInTheDocument();
-    const idemiaLink = within(idemia).getByRole('link', {
-      name: /Read case study/i,
-    });
-    expect(idemiaLink).toHaveAttribute('href', '/experience/idemia');
-
-    // Exactly 3 stack tags per flagship teaser
-    expect(within(siliconExpert).getAllByRole('listitem')).toHaveLength(3);
-    expect(within(idemia).getAllByRole('listitem')).toHaveLength(3);
-
-    // Strictly text-only teasers: no schematic SVGs or product screenshots on /
     expect(container.querySelector('svg')).toBeNull();
     expect(container.querySelector('img')).toBeNull();
-  });
-
-  it('renders always-visible, non-expandable compact rows for earlier role progression', () => {
-    const { container } = renderExperience();
-
-    const earlierHeading = screen.getByRole('heading', { level: 3, name: /Role Progression/i });
-    expect(earlierHeading).toBeInTheDocument();
-
-    const earlierList = earlierHeading.nextElementSibling;
-    expect(earlierList?.tagName).toBe('UL');
-    const rows = within(earlierList as HTMLElement).getAllByRole('listitem');
-    expect(rows).toHaveLength(2);
-
-    expect(rows[0]).toHaveTextContent(/SiliconExpert/);
-    expect(rows[0]).toHaveTextContent(/Senior Front End Developer I/);
-    expect(rows[0]).toHaveTextContent(/Jun 2022 – Mar 2025/);
-
-    expect(rows[1]).toHaveTextContent(/IDEMIA Egypt/);
-    expect(rows[1]).toHaveTextContent(/Junior Front End Developer/);
-    expect(rows[1]).toHaveTextContent(/Jul 2018 – Apr 2021/);
-
-    for (const row of rows) {
-      expect(row).toBeVisible();
-      expect(within(row).queryByRole('button')).toBeNull();
-      expect(within(row).queryByRole('link')).toBeNull();
-    }
-
-    expect(container.querySelector('details')).toBeNull();
   });
 });

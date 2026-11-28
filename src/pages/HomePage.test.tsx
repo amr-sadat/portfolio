@@ -23,7 +23,10 @@ describe('HomePage', () => {
     expect(
       screen.getByRole('heading', { level: 1, name: 'Amr Sadat Abou Hegab' }),
     ).toBeInTheDocument();
-    expect(screen.getAllByRole('link', { name: /Read case study/i })).toHaveLength(2);
+    expect(
+      screen.getByRole('heading', { level: 3, name: 'Senior Front End Developer II' }),
+    ).toBeInTheDocument();
+    expect(screen.queryByRole('link', { name: /Read case study/i })).not.toBeInTheDocument();
     expect(screen.getByRole('heading', { level: 3, name: 'Ufuq' })).toBeInTheDocument();
     expect(screen.getByRole('button', { name: /copy email/i })).toBeInTheDocument();
   });

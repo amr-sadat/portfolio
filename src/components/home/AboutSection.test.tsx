@@ -15,21 +15,19 @@ describe('AboutSection', () => {
     expect(heading.previousElementSibling).toBeNull();
   });
 
-  it('renders all three architectural beats with canonical engineering positioning', () => {
+  it('renders both architectural beats with canonical engineering positioning', () => {
     render(<AboutSection about={homeContent.about} />);
 
     const beatHeadings = screen.getAllByRole('heading', { level: 3 });
-    expect(beatHeadings).toHaveLength(3);
+    expect(beatHeadings).toHaveLength(2);
 
     expect(screen.getByText(/IDEMIA Egypt/i)).toBeInTheDocument();
     expect(screen.getByText(/SiliconExpert/i)).toBeInTheDocument();
-    expect(screen.getByText(/NgRx Signal Store/i)).toBeInTheDocument();
+    expect(screen.getByText(/Signals and RxJS/i)).toBeInTheDocument();
 
     expect(
       screen.getByRole('heading', { level: 3, name: /AI-Augmented Engineering/i }),
     ).toBeInTheDocument();
     expect(screen.getByText(/Claude Code, Devin AI, and OpenCode/i)).toBeInTheDocument();
-
-    expect(screen.getByText(/React and TypeScript/i)).toBeInTheDocument();
   });
 });

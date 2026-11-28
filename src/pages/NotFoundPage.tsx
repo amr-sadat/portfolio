@@ -11,7 +11,7 @@ export function NotFoundPage() {
         </h1>
         <p className={styles.copy}>
           The route you requested is not part of this portfolio. Return to the home page or jump
-          straight to the Experience Case Studies.
+          straight to the Experience section.
         </p>
         <nav aria-label="Recovery links" className={styles.actions}>
           <Link to="/" className={styles.primaryAction}>

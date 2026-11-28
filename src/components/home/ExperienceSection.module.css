@@ -5,27 +5,27 @@
   border-top: 1px solid var(--color-border-subtle);
 }
 
-.grid {
+.header {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+  margin-bottom: var(--space-8);
+}
+
+.subtitle {
+  max-width: var(--prose-measure);
+  font-size: var(--text-prose);
+  line-height: var(--leading-prose);
+  color: var(--color-ink-muted);
+}
+
+.cardsGrid {
   display: grid;
-  grid-template-columns: minmax(0, var(--toc-width)) minmax(0, 1fr);
-  gap: var(--space-8) var(--space-12);
-  align-items: start;
-}
-
-.content {
-  display: flex;
-  flex-direction: column;
-  gap: var(--space-10);
-  min-width: 0;
-}
-
-.flagships {
-  display: flex;
-  flex-direction: column;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
   gap: var(--space-6);
 }
 
-.teaser {
+.card {
   display: flex;
   flex-direction: column;
   gap: var(--space-4);
@@ -35,15 +35,75 @@
   border: 1px solid var(--color-border-subtle);
   box-shadow: var(--surface-specular-highlight);
   backdrop-filter: blur(12px);
+  transition: border-color var(--duration-fast) var(--ease-standard);
 }
 
-.teaserHeader {
+.card:hover {
+  border-color: var(--color-border-strong);
+}
+
+.cardHeader {
   display: flex;
   flex-direction: column;
   gap: var(--space-2);
 }
 
-.teaserTitle {
+.topRow {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-2) var(--space-3);
+}
+
+.companyLine {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--space-2);
+  font-size: var(--text-mono-sm);
+  line-height: 1.4;
+  color: var(--color-ink-muted);
+}
+
+.company {
+  font-weight: 600;
+  color: var(--color-ink-primary);
+}
+
+.separator {
+  color: var(--color-border-strong);
+}
+
+.system {
+  color: var(--color-ink-muted);
+}
+
+.tenure,
+.tenureCurrent {
+  font-family: var(--font-mono);
+  font-size: var(--text-mono-sm);
+  font-variant-numeric: tabular-nums;
+  line-height: 1.4;
+  white-space: nowrap;
+  padding: var(--space-1) var(--space-2);
+  border-radius: var(--radius-badge);
+}
+
+.tenure {
+  color: var(--color-ink-muted);
+  background-color: var(--color-secondary-bg);
+  border: 1px solid var(--color-border-subtle);
+}
+
+.tenureCurrent {
+  color: var(--color-accent-tint-ink);
+  background-color: var(--color-accent-tint-bg);
+  border: 1px solid rgba(242, 120, 75, 0.28);
+  font-weight: 600;
+}
+
+.roleTitle {
   font-size: var(--text-h3);
   line-height: 1.3;
   letter-spacing: var(--tracking-h3);
@@ -51,49 +111,38 @@
   color: var(--color-ink-primary);
 }
 
-.systemSeparator {
+.summary {
+  font-size: var(--text-ui);
+  line-height: var(--leading-ui);
   color: var(--color-ink-muted);
-  font-weight: 400;
 }
 
-.systemName {
-  font-weight: 500;
-  color: var(--color-ink-primary);
-}
-
-.meta {
+.highlights {
   display: flex;
-  flex-wrap: wrap;
-  align-items: center;
+  flex-direction: column;
   gap: var(--space-2);
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.highlightItem {
+  position: relative;
+  padding-left: var(--space-4);
   font-size: var(--text-mono-sm);
-  line-height: 1.5;
+  line-height: 1.6;
   color: var(--color-ink-muted);
 }
 
-.metaDivider {
-  color: var(--color-border-strong);
-}
-
-.tenure {
-  font-family: var(--font-mono);
-  font-variant-numeric: tabular-nums;
-}
-
-.problem {
-  max-width: var(--prose-measure);
-  font-size: var(--text-prose);
-  line-height: var(--leading-prose);
-  color: var(--color-ink-muted);
-}
-
-.teaserFooter {
-  display: flex;
-  flex-wrap: wrap;
-  align-items: center;
-  justify-content: space-between;
-  gap: var(--space-4);
-  padding-top: var(--space-2);
+.highlightItem::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 0.65em;
+  width: 5px;
+  height: 5px;
+  border-radius: 999px;
+  background-color: var(--color-accent-text);
 }
 
 .stackList {
@@ -101,106 +150,41 @@
   flex-wrap: wrap;
   gap: var(--space-2);
   list-style: none;
-  margin: 0;
-  padding: 0;
+  margin: auto 0 0;
+  padding: var(--space-2) 0 0;
+  border-top: 1px solid var(--color-border-subtle);
 }
 
 .stackTag {
   font-family: var(--font-mono);
   font-size: var(--text-mono-sm);
   line-height: 1.4;
-  padding: var(--space-1) var(--space-3);
+  padding: var(--space-1) var(--space-2);
   border-radius: var(--radius-badge);
   background-color: var(--color-secondary-bg);
   color: var(--color-ink-muted);
   border: 1px solid var(--color-border-subtle);
 }
 
-.caseStudyLink {
-  display: inline-flex;
-  align-items: center;
-  min-height: 44px;
-  padding: 0 var(--space-2);
-  font-size: var(--text-ui);
-  font-weight: 600;
-  color: var(--color-accent-text);
-  text-decoration: none;
-  border-radius: var(--radius-badge);
-  transition: color var(--duration-fast) var(--ease-standard);
+@media (prefers-reduced-motion: reduce) {
+  .card {
+    transition: none;
+  }
 }
 
-.caseStudyLink:hover {
-  color: var(--color-accent-fill-hover);
-  text-decoration: underline;
-  text-underline-offset: 4px;
-}
-
-.earlierBlock {
-  display: flex;
-  flex-direction: column;
-  gap: var(--space-3);
-}
-
-.earlierHeading {
-  font-family: var(--font-sans);
-  font-size: var(--text-h3);
-  line-height: 1.3;
-  letter-spacing: var(--tracking-h3);
-  font-weight: 600;
-  color: var(--color-ink-primary);
-}
-
-.earlierList {
-  list-style: none;
-  margin: 0;
-  padding: 0;
-  border-top: 1px solid var(--color-border-subtle);
-}
-
-.earlierRow {
-  display: grid;
-  grid-template-columns: minmax(0, 1fr) minmax(0, 1.2fr) auto;
-  align-items: baseline;
-  gap: var(--space-4);
-  padding: var(--space-3) 0;
-  border-bottom: 1px solid var(--color-border-subtle);
-  font-size: var(--text-mono-sm);
-  line-height: 1.5;
-}
-
-.earlierCompany {
-  font-weight: 600;
-  color: var(--color-ink-primary);
-}
-
-.earlierRole {
-  color: var(--color-ink-muted);
-}
-
-.earlierTenure {
-  font-family: var(--font-mono);
-  font-variant-numeric: tabular-nums;
-  color: var(--color-ink-muted);
-  text-align: right;
-  white-space: nowrap;
+@media (max-width: 900px) {
+  .cardsGrid {
+    grid-template-columns: minmax(0, 1fr);
+    gap: var(--space-5);
+  }
 }
 
 @media (max-width: 768px) {
-  .grid {
-    grid-template-columns: minmax(0, 1fr);
-    gap: var(--space-6);
+  .header {
+    margin-bottom: var(--space-6);
   }
 
-  .teaser {
+  .card {
     padding: var(--space-5);
-  }
-
-  .earlierRow {
-    grid-template-columns: minmax(0, 1fr);
-    gap: var(--space-1);
-  }
-
-  .earlierTenure {
-    text-align: left;
   }
 }
