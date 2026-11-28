@@ -35,7 +35,7 @@ for (const route of ROUTES) {
     expect(colorScheme).toBe('light');
     await expect(page.getByRole('banner')).toBeVisible();
     await expect(page.getByRole('main')).toBeVisible();
-    await expect(page.getByRole('contentinfo')).toBeVisible();
+    await expect(page.getByRole('contentinfo')).toHaveCount(0);
     await expect(page.getByRole('heading', { level: 1, name: route.heading })).toBeVisible();
 
     const accessibilityResults = await new AxeBuilder({ page }).analyze();

@@ -1,7 +1,6 @@
 import { Suspense, useEffect } from 'react';
 import { Outlet, useLocation } from 'react-router';
 import { syncDocumentMetadata } from '../../seo/metadata';
-import { FooterColophon } from './FooterColophon';
 import { TopNav } from './TopNav';
 import styles from './AppShell.module.css';
 
@@ -37,7 +36,6 @@ export function AppShell() {
           <Outlet />
         </Suspense>
       </div>
-      <FooterColophon />
     </div>
   );
 }
