@@ -17,7 +17,7 @@ describe('portfolio routes', () => {
 
     expect(screen.getByRole('banner')).toBeInTheDocument();
     expect(screen.getByRole('main')).toBeInTheDocument();
-    expect(screen.getByRole('contentinfo')).toBeInTheDocument();
+    expect(screen.queryByRole('contentinfo')).not.toBeInTheDocument();
     expect(
       screen.getByRole('heading', { level: 1, name: /amr sadat abou hegab/i }),
     ).toBeInTheDocument();
