@@ -8,7 +8,7 @@ const ROUTES = [
 ];
 
 for (const route of ROUTES) {
-  test(`renders ${route.path} cleanly in dark mode with zero axe violations and no external requests`, async ({
+  test(`renders ${route.path} cleanly in light mode with zero axe violations and no external requests`, async ({
     page,
   }) => {
     const errors: string[] = [];
@@ -32,7 +32,7 @@ for (const route of ROUTES) {
     const colorScheme = await page.evaluate(
       () => window.getComputedStyle(document.documentElement).colorScheme,
     );
-    expect(colorScheme).toBe('dark');
+    expect(colorScheme).toBe('light');
     await expect(page.getByRole('banner')).toBeVisible();
     await expect(page.getByRole('main')).toBeVisible();
     await expect(page.getByRole('contentinfo')).toBeVisible();
@@ -45,16 +45,16 @@ for (const route of ROUTES) {
   });
 }
 
-test('stays in dark mode regardless of light OS preference and renders no theme toggle', async ({
+test('stays in light mode regardless of dark OS preference and renders no theme toggle', async ({
   page,
 }) => {
-  await page.emulateMedia({ colorScheme: 'light' });
+  await page.emulateMedia({ colorScheme: 'dark' });
   await page.goto('/');
 
   const colorScheme = await page.evaluate(
     () => window.getComputedStyle(document.documentElement).colorScheme,
   );
-  expect(colorScheme).toBe('dark');
+  expect(colorScheme).toBe('light');
   await expect(page.getByRole('button', { name: /switch to|theme/i })).toHaveCount(0);
 });
 
