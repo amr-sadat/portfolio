@@ -39,60 +39,59 @@
 }
 
 :root {
-  color-scheme: dark;
+  color-scheme: light;
 
-  /* Surfaces */
-  --color-bg: #0a0a0c;
-  --color-stage-start: #161414;
-  --color-stage-end: #100f10;
-  --color-surface-elevated: #141213;
-  --color-surface-header: rgba(10, 10, 12, 0.82);
-  --color-surface-sheet: #0e0d0f;
+  /* Surfaces (Daylight Warm Paper) */
+  --color-bg: #faf8f5;
+  --color-stage-start: #ffffff;
+  --color-stage-end: #f6f3ee;
+  --color-surface-elevated: #ffffff;
+  --color-surface-header: rgba(250, 248, 245, 0.86);
+  --color-surface-sheet: #faf8f5;
 
   /* Ink */
-  --color-ink-primary: #f8f6f4;
-  --color-ink-muted: #a19c98;
+  --color-ink-primary: #171514;
+  --color-ink-muted: #57514d;
 
   /* Borders */
-  --color-border-subtle: rgba(255, 255, 255, 0.085);
-  --color-border-strong: rgba(255, 255, 255, 0.16);
+  --color-border-subtle: rgba(23, 21, 20, 0.1);
+  --color-border-strong: rgba(23, 21, 20, 0.22);
 
-  /* Warm Copper Accent */
-  --color-accent-fill: #cc471b;
-  --color-accent-fill-hover: #dc5325;
-  --color-accent-fill-gradient: linear-gradient(180deg, #dc5325 0%, #bf3e14 100%);
+  /* Kiln Copper Accent */
+  --color-accent-fill: #b83d14;
+  --color-accent-fill-hover: #9e320e;
+  --color-accent-fill-gradient: linear-gradient(180deg, #c74519 0%, #a83510 100%);
   --color-accent-on-fill: #ffffff;
-  --color-accent-text: #f2784b;
-  --color-accent-tint-bg: rgba(242, 120, 75, 0.14);
-  --color-accent-tint-ink: #f69a76;
-  --color-focus-ring: #f2784b;
+  --color-accent-text: #a83510;
+  --color-accent-tint-bg: rgba(184, 61, 20, 0.1);
+  --color-accent-tint-ink: #942e0c;
+  --color-focus-ring: #b83d14;
 
   /* Secondary Neutral Action */
-  --color-secondary-bg: rgba(255, 255, 255, 0.048);
-  --color-secondary-bg-hover: rgba(255, 255, 255, 0.09);
-  --color-secondary-ink: #efece9;
+  --color-secondary-bg: rgba(23, 21, 20, 0.045);
+  --color-secondary-bg-hover: rgba(23, 21, 20, 0.09);
+  --color-secondary-ink: #1f1c1a;
 
   /* Semantic States (strictly for real system states) */
-  --color-success-dot: #34d399;
-  --color-success-ink: #6ee7b7;
-  --color-success-bg: rgba(52, 211, 153, 0.12);
-  --color-warning-ink: #fbbf24;
-  --color-warning-bg: rgba(251, 191, 36, 0.12);
-  --color-error-ink: #f87171;
-  --color-error-bg: rgba(248, 113, 113, 0.12);
+  --color-success-dot: #059669;
+  --color-success-ink: #065f46;
+  --color-success-bg: rgba(5, 150, 105, 0.1);
+  --color-warning-ink: #92400e;
+  --color-warning-bg: rgba(217, 119, 6, 0.12);
+  --color-error-ink: #b91c1c;
+  --color-error-bg: rgba(220, 38, 38, 0.1);
 
-  /* Depth (1px specular hairline glass) */
-  --shadow-card:
-    inset 0 1px 0 rgba(255, 255, 255, 0.09), 0 1px 2px rgba(0, 0, 0, 0.45),
-    0 12px 32px -8px rgba(0, 0, 0, 0.5);
-  --shadow-stage: inset 0 1px 0 rgba(255, 255, 255, 0.07);
-  --shadow-header: 0 1px 0 rgba(255, 255, 255, 0.07);
-  --surface-specular-highlight: inset 0 1px 0 rgba(255, 255, 255, 0.08);
+  /* Depth (crisp architectural paper layering) */
+  --shadow-card: 0 1px 2px rgba(23, 21, 20, 0.06), 0 10px 28px -8px rgba(23, 21, 20, 0.08);
+  --shadow-stage: 0 1px 2px rgba(23, 21, 20, 0.05);
+  --shadow-header: 0 1px 0 rgba(23, 21, 20, 0.06);
+  --surface-specular-highlight:
+    inset 0 1px 0 rgba(255, 255, 255, 0.9), 0 1px 3px rgba(23, 21, 20, 0.05);
 
   /* Scrollbar */
-  --color-scrollbar-track: #0a0a0c;
-  --color-scrollbar-thumb: rgba(255, 255, 255, 0.16);
-  --color-scrollbar-thumb-hover: rgba(255, 255, 255, 0.28);
+  --color-scrollbar-track: #faf8f5;
+  --color-scrollbar-thumb: rgba(23, 21, 20, 0.18);
+  --color-scrollbar-thumb-hover: rgba(23, 21, 20, 0.32);
 
   /* Typography Families */
   --font-sans:
