@@ -5,24 +5,36 @@
   border-top: 1px solid var(--color-border-subtle);
 }
 
-.grid {
-  display: grid;
-  grid-template-columns: minmax(0, var(--toc-width)) minmax(0, var(--prose-measure));
-  gap: var(--space-8) var(--space-12);
-  align-items: start;
-}
-
-.content {
-  display: flex;
-  flex-direction: column;
-  gap: var(--space-6);
-  min-width: 0;
+.title {
+  font-size: clamp(2rem, 4.2vw, 3.25rem);
+  line-height: 1.08;
+  letter-spacing: -0.025em;
+  font-weight: 600;
+  color: var(--color-ink-primary);
+  max-width: 22ch;
+  text-wrap: balance;
 }
 
 .lead {
+  margin-top: var(--space-4);
+  max-width: 58ch;
   font-size: var(--text-prose);
   line-height: var(--leading-prose);
   color: var(--color-ink-muted);
+}
+
+.rule {
+  margin: var(--space-8) 0;
+  height: 1px;
+  background-color: var(--color-border-subtle);
+}
+
+.bar {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-6);
 }
 
 .primaryActions {
@@ -39,7 +51,7 @@
   align-items: center;
   justify-content: center;
   min-height: 44px;
-  padding: 0 var(--space-5);
+  padding: 0 var(--space-6);
   border-radius: var(--radius-cta);
   font-size: var(--text-ui);
   font-weight: 600;
@@ -73,34 +85,24 @@
   background: var(--color-success-bg);
 }
 
-.mailtoLink {
-  font-family: var(--font-mono);
-  font-size: var(--text-mono);
-  font-weight: 500;
+.mailtoLink,
+.cvLink {
+  padding: 0 var(--space-5);
   background-color: var(--color-secondary-bg);
   color: var(--color-secondary-ink);
   border: 1px solid var(--color-border-subtle);
 }
 
-.mailtoLink:hover {
-  background-color: var(--color-secondary-bg-hover);
-  border-color: var(--color-border-strong);
-}
-
-.liveRegion {
-  min-height: 1.5em;
-  font-size: var(--text-mono-sm);
-  line-height: 1.5;
-  color: var(--color-ink-muted);
-}
-
-.liveRegionCopied {
-  color: var(--color-success-ink);
+.mailtoLink {
+  font-family: var(--font-mono);
+  font-size: var(--text-mono);
   font-weight: 500;
 }
 
-.liveRegionFallback {
-  color: var(--color-warning-ink);
+.mailtoLink:hover,
+.cvLink:hover {
+  background-color: var(--color-secondary-bg-hover);
+  border-color: var(--color-border-strong);
 }
 
 .channelList {
@@ -110,8 +112,7 @@
   gap: var(--space-3) var(--space-6);
   list-style: none;
   margin: 0;
-  padding: var(--space-4) 0 0;
-  border-top: 1px solid var(--color-border-subtle);
+  padding: 0;
 }
 
 .channelItem {
@@ -133,8 +134,19 @@
 
 .channelLink:hover {
   color: var(--color-accent-text);
-  text-decoration: underline;
-  text-underline-offset: 4px;
+}
+
+.externalGlyph {
+  flex: 0 0 auto;
+  color: var(--color-ink-muted);
+  transition:
+    color var(--duration-fast) var(--ease-standard),
+    transform var(--duration-fast) var(--ease-standard);
+}
+
+.channelLink:hover .externalGlyph {
+  color: var(--color-accent-text);
+  transform: translate(2px, -2px);
 }
 
 .channelPlaceholder {
@@ -167,24 +179,41 @@
   color: var(--color-ink-muted);
 }
 
-.cvLink {
-  background-color: var(--color-secondary-bg);
-  color: var(--color-secondary-ink);
-  border: 1px solid var(--color-border-subtle);
+.liveRegion {
+  margin-top: var(--space-3);
+  min-height: 1.5em;
+  font-size: var(--text-mono-sm);
+  line-height: 1.5;
+  color: var(--color-ink-muted);
 }
 
-.cvLink:hover {
-  background-color: var(--color-secondary-bg-hover);
-  border-color: var(--color-border-strong);
+.liveRegionCopied {
+  color: var(--color-success-ink);
+  font-weight: 500;
+}
+
+.liveRegionFallback {
+  color: var(--color-warning-ink);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .channelLink,
+  .externalGlyph {
+    transition: none;
+  }
+
+  .channelLink:hover .externalGlyph {
+    transform: none;
+  }
 }
 
 @media (max-width: 768px) {
-  .grid {
-    grid-template-columns: minmax(0, 1fr);
-    gap: var(--space-6);
+  .rule {
+    margin: var(--space-6) 0;
   }
 
   .primaryActions {
+    width: 100%;
     flex-direction: column;
     align-items: stretch;
   }

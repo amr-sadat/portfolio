@@ -36,16 +36,16 @@ html {
   background-color: var(--color-scrollbar-thumb-hover);
 }
 
-/* Ambient canvas: #0A0A0C + subtle warm copper top radial glow & faint masked dot-grid. */
+/* Ambient canvas: Daylight warm paper (#FAF8F5) + subtle kiln copper top radial glow & faint masked dot-grid. */
 body {
   position: relative;
   isolation: isolate;
   background-color: var(--color-bg);
   background-image: radial-gradient(
-    68% 42% at 50% -4%,
-    rgba(204, 71, 27, 0.14) 0%,
-    rgba(204, 71, 27, 0.04) 45%,
-    transparent 78%
+    68% 36% at 50% -2%,
+    rgba(184, 61, 20, 0.08) 0%,
+    rgba(184, 61, 20, 0.025) 45%,
+    transparent 74%
   );
   background-repeat: no-repeat;
 }
@@ -56,7 +56,7 @@ body::before {
   inset: 0;
   pointer-events: none;
   z-index: -1;
-  background-image: radial-gradient(rgba(255, 255, 255, 0.09) 1px, transparent 1px);
+  background-image: radial-gradient(rgba(23, 21, 20, 0.08) 1px, transparent 1px);
   background-size: 24px 24px;
   mask-image: radial-gradient(ellipse 75% 55% at 50% 0%, #000 10%, transparent 80%);
   -webkit-mask-image: radial-gradient(ellipse 75% 55% at 50% 0%, #000 10%, transparent 80%);

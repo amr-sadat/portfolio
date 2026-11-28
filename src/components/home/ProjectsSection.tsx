@@ -8,18 +8,19 @@ export interface ProjectsSectionProps {
 export function ProjectsSection({ projects }: ProjectsSectionProps) {
   return (
     <section id="projects" className={styles.section} aria-labelledby="projects-heading">
-      <div className={styles.header}>
-        <h2 id="projects-heading">{projects.heading}</h2>
-      </div>
+      <h2 id="projects-heading" className={styles.heading}>
+        {projects.heading}
+      </h2>
+      <div className={styles.rule} aria-hidden="true" />
 
-      <ul className={styles.grid}>
+      <ul className={styles.columns}>
         {projects.items.map((project) => (
-          <li key={project.id} className={styles.cardItem}>
+          <li key={project.id} className={styles.columnItem}>
             <a
               href={project.href}
               target="_blank"
               rel="noopener noreferrer"
-              className={styles.card}
+              className={styles.projectLink}
             >
               <div className={styles.cardTop}>
                 <div className={styles.titleRow}>
@@ -28,9 +29,22 @@ export function ProjectsSection({ projects }: ProjectsSectionProps) {
                     <span className={styles.statusBadge}>{project.statusBadge}</span>
                   ) : null}
                 </div>
-                <span className={styles.externalGlyph} aria-hidden="true">
-                  ↗
-                </span>
+                <svg
+                  className={styles.externalGlyph}
+                  width="18"
+                  height="18"
+                  viewBox="0 0 18 18"
+                  fill="none"
+                  aria-hidden="true"
+                >
+                  <path
+                    d="M5.25 12.75L12.75 5.25M12.75 5.25H6.75M12.75 5.25V11.25"
+                    stroke="currentColor"
+                    strokeWidth="1.6"
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                  />
+                </svg>
               </div>
 
               <p className={styles.summary}>{project.summary}</p>
